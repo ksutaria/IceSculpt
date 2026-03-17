@@ -28,9 +28,15 @@ dependencies = [
     "pycairo>=1.16",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
 [project.urls]
-Homepage = "https://github.com/nicholasgasior/icesculpt"
-Issues = "https://github.com/nicholasgasior/icesculpt/issues"
+Homepage = "https://github.com/ksutaria/IceSculpt"
+Issues = "https://github.com/ksutaria/IceSculpt/issues"
 
 [project.scripts]
 icesculpt = "icesculpt.app:main"
