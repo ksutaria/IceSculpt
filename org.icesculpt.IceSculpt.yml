@@ -1,0 +1,29 @@
+app-id: org.icesculpt.IceSculpt
+runtime: org.gnome.Platform
+runtime-version: '45'
+sdk: org.gnome.Sdk
+command: icesculpt
+finish-args:
+  - --share=ipc
+  - --socket=x11
+  - --socket=fallback-x11
+  - --device=dri
+  - --filesystem=home
+  - --talk-name=org.freedesktop.Notifications
+
+modules:
+  - name: python3-pygobject
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://download.gnome.org/sources/pygobject/3.46/pygobject-3.46.0.tar.xz
+        sha256: 3c968f944a9559f97204f1a238711e3b3303d735f49ef2436d4f9f04e76c167d
+
+  - name: icesculpt
+    buildsystem: python
+    build-options:
+      env:
+        PYTHONPATH: /app/lib/python3.11/site-packages
+    sources:
+      - type: dir
+        path: .

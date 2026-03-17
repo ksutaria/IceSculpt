@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+"""IceSculpt launcher."""
+
+import sys
+import os
+
+# Add project root to path so the package can be found
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from icesculpt.app import main
+
+sys.exit(main())

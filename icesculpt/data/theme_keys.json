@@ -1,0 +1,1454 @@
+{
+  "keys": [
+    {
+      "name": "ThemeDescription",
+      "type": "string",
+      "default": "",
+      "category": "Metadata",
+      "description": "A short description of the theme",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ThemeAuthor",
+      "type": "string",
+      "default": "",
+      "category": "Metadata",
+      "description": "The author of the theme",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "License",
+      "type": "string",
+      "default": "",
+      "category": "Metadata",
+      "description": "The license under which the theme is distributed",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "Look",
+      "type": "look",
+      "default": "flat",
+      "category": "Look",
+      "description": "The overall rendering style of the window manager",
+      "min": null,
+      "max": null,
+      "choices": ["pixmap", "flat", "motif", "win95", "gtk", "nice", "metal2", "warp3", "warp4"]
+    },
+    {
+      "name": "ColorActiveTitleBar",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "Title Bar Colors",
+      "description": "Background color of the active window title bar",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveTitleBarText",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "Title Bar Colors",
+      "description": "Text color of the active window title bar",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveTitleBarShadow",
+      "type": "color",
+      "default": "",
+      "category": "Title Bar Colors",
+      "description": "Shadow color of the active window title bar text",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalTitleBar",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Title Bar Colors",
+      "description": "Background color of inactive window title bars",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalTitleBarText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Title Bar Colors",
+      "description": "Text color of inactive window title bars",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalTitleBarShadow",
+      "type": "color",
+      "default": "",
+      "category": "Title Bar Colors",
+      "description": "Shadow color of inactive window title bar text",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveBorder",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "Border Colors",
+      "description": "Border color of the active window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalBorder",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Border Colors",
+      "description": "Border color of inactive windows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalButton",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Button Colors",
+      "description": "Background color of normal buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalButtonText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Button Colors",
+      "description": "Text color of normal buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveButton",
+      "type": "color",
+      "default": "rgb:E0/E0/E0",
+      "category": "Button Colors",
+      "description": "Background color of active (pressed) buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveButtonText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Button Colors",
+      "description": "Text color of active (pressed) buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalMenu",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Menu Colors",
+      "description": "Background color of menus",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalMenuItemText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Menu Colors",
+      "description": "Text color of normal menu items",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveMenuItem",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "Menu Colors",
+      "description": "Background color of the active (highlighted) menu item",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveMenuItemText",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "Menu Colors",
+      "description": "Text color of the active (highlighted) menu item",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorDisabledMenuItemText",
+      "type": "color",
+      "default": "rgb:80/80/80",
+      "category": "Menu Colors",
+      "description": "Text color of disabled (greyed out) menu items",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalMenuSeparator",
+      "type": "color",
+      "default": "",
+      "category": "Menu Colors",
+      "description": "Color of menu separator lines",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalMenuItemShadow",
+      "type": "color",
+      "default": "",
+      "category": "Menu Colors",
+      "description": "Shadow color of normal menu item text",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorDefaultTaskBar",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Taskbar Colors",
+      "description": "Background color of the taskbar",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalTaskBarApp",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Taskbar Colors",
+      "description": "Background color of normal taskbar application buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNormalTaskBarAppText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Taskbar Colors",
+      "description": "Text color of normal taskbar application buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveTaskBarApp",
+      "type": "color",
+      "default": "rgb:E0/E0/E0",
+      "category": "Taskbar Colors",
+      "description": "Background color of the active taskbar application button",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorActiveTaskBarAppText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Taskbar Colors",
+      "description": "Text color of the active taskbar application button",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMinimizedTaskBarApp",
+      "type": "color",
+      "default": "rgb:A0/A0/A0",
+      "category": "Taskbar Colors",
+      "description": "Background color of minimized application taskbar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMinimizedTaskBarAppText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Taskbar Colors",
+      "description": "Text color of minimized application taskbar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInvisibleTaskBarApp",
+      "type": "color",
+      "default": "rgb:80/80/80",
+      "category": "Taskbar Colors",
+      "description": "Background color of invisible (hidden) application taskbar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInvisibleTaskBarAppText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Taskbar Colors",
+      "description": "Text color of invisible (hidden) application taskbar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorDialog",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Dialog Colors",
+      "description": "Background color of dialog windows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorDialogText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Dialog Colors",
+      "description": "Text color in dialog windows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorToolTip",
+      "type": "color",
+      "default": "rgb:FF/FF/E0",
+      "category": "Tooltip Colors",
+      "description": "Background color of tooltips",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorToolTipText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Tooltip Colors",
+      "description": "Text color of tooltips",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorQuickSwitch",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "QuickSwitch Colors",
+      "description": "Background color of the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorQuickSwitchText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "QuickSwitch Colors",
+      "description": "Text color of the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorQuickSwitchActive",
+      "type": "color",
+      "default": "",
+      "category": "QuickSwitch Colors",
+      "description": "Background color of the active item in the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorListBox",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "ListBox Colors",
+      "description": "Background color of list boxes",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorListBoxText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "ListBox Colors",
+      "description": "Text color of list boxes",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorListBoxSelection",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "ListBox Colors",
+      "description": "Background color of selected items in list boxes",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorListBoxSelectionText",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "ListBox Colors",
+      "description": "Text color of selected items in list boxes",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBar",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "ScrollBar Colors",
+      "description": "Background color of scroll bar troughs",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBarSlider",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "ScrollBar Colors",
+      "description": "Color of the scroll bar slider",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBarButton",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "ScrollBar Colors",
+      "description": "Color of scroll bar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBarArrow",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "ScrollBar Colors",
+      "description": "Color of scroll bar arrows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBarButtonArrow",
+      "type": "color",
+      "default": "",
+      "category": "ScrollBar Colors",
+      "description": "Color of scroll bar button arrows when distinct from regular arrows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorScrollBarInactiveArrow",
+      "type": "color",
+      "default": "rgb:80/80/80",
+      "category": "ScrollBar Colors",
+      "description": "Color of inactive scroll bar arrows",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInput",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "Input Colors",
+      "description": "Background color of input fields",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInputText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Input Colors",
+      "description": "Text color of input fields",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInputSelection",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "Input Colors",
+      "description": "Background color of selected text in input fields",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorInputSelectionText",
+      "type": "color",
+      "default": "rgb:FF/FF/FF",
+      "category": "Input Colors",
+      "description": "Text color of selected text in input fields",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorLabel",
+      "type": "color",
+      "default": "rgb:C0/C0/C0",
+      "category": "Label Colors",
+      "description": "Background color of labels",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorLabelText",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Label Colors",
+      "description": "Text color of labels",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorClock",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Clock Colors",
+      "description": "Background color of the taskbar clock",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorClockText",
+      "type": "color",
+      "default": "rgb:00/FF/00",
+      "category": "Clock Colors",
+      "description": "Text color of the taskbar clock",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApm",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "APM/Battery Colors",
+      "description": "Background color of the APM/battery monitor",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApmText",
+      "type": "color",
+      "default": "rgb:00/FF/00",
+      "category": "APM/Battery Colors",
+      "description": "Text color of the APM/battery monitor",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApmBattFull",
+      "type": "color",
+      "default": "rgb:00/FF/00",
+      "category": "APM/Battery Colors",
+      "description": "Color representing a full battery",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApmBattLow",
+      "type": "color",
+      "default": "rgb:FF/FF/00",
+      "category": "APM/Battery Colors",
+      "description": "Color representing a low battery",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApmBattCritical",
+      "type": "color",
+      "default": "rgb:FF/00/00",
+      "category": "APM/Battery Colors",
+      "description": "Color representing a critically low battery",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorApmGraphBg",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "APM/Battery Colors",
+      "description": "Background color of the APM battery graph",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusUser",
+      "type": "color",
+      "default": "rgb:00/FF/00",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing user CPU time in the CPU monitor",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusSystem",
+      "type": "color",
+      "default": "rgb:FF/00/00",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing system CPU time in the CPU monitor",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusInterrupts",
+      "type": "color",
+      "default": "rgb:FF/FF/00",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing hardware interrupt CPU time",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusIoWait",
+      "type": "color",
+      "default": "rgb:60/00/60",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing I/O wait CPU time",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusSoftIrq",
+      "type": "color",
+      "default": "rgb:00/FF/FF",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing soft interrupt CPU time",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusNice",
+      "type": "color",
+      "default": "rgb:00/00/FF",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing nice CPU time",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusIdle",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing idle CPU time",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorCPUStatusSteal",
+      "type": "color",
+      "default": "rgb:FF/8A/91",
+      "category": "CPU Monitor Colors",
+      "description": "Color representing stolen CPU time (virtual machines)",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNetSend",
+      "type": "color",
+      "default": "rgb:FF/00/00",
+      "category": "Network Monitor Colors",
+      "description": "Color representing outgoing network traffic",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNetReceive",
+      "type": "color",
+      "default": "rgb:00/FF/00",
+      "category": "Network Monitor Colors",
+      "description": "Color representing incoming network traffic",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorNetIdle",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Network Monitor Colors",
+      "description": "Color representing idle network state",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMEMStatusUser",
+      "type": "color",
+      "default": "rgb:40/40/80",
+      "category": "Memory Monitor Colors",
+      "description": "Color representing user memory usage",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMEMStatusBuffers",
+      "type": "color",
+      "default": "rgb:60/60/C0",
+      "category": "Memory Monitor Colors",
+      "description": "Color representing buffer memory usage",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMEMStatusCached",
+      "type": "color",
+      "default": "rgb:80/80/FF",
+      "category": "Memory Monitor Colors",
+      "description": "Color representing cached memory usage",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ColorMEMStatusFree",
+      "type": "color",
+      "default": "rgb:00/00/00",
+      "category": "Memory Monitor Colors",
+      "description": "Color representing free memory",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopBackgroundColor",
+      "type": "color",
+      "default": "rgb:00/00/80",
+      "category": "Desktop/Wallpaper",
+      "description": "Background color of the desktop",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopBackgroundImage",
+      "type": "filepath",
+      "default": "",
+      "category": "Desktop/Wallpaper",
+      "description": "Path to the desktop background image",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopBackgroundScaled",
+      "type": "bool",
+      "default": "1",
+      "category": "Desktop/Wallpaper",
+      "description": "Whether to scale the desktop background image to fill the screen",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopBackgroundCenter",
+      "type": "bool",
+      "default": "0",
+      "category": "Desktop/Wallpaper",
+      "description": "Whether to center the desktop background image",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopBackgroundMultihead",
+      "type": "bool",
+      "default": "0",
+      "category": "Desktop/Wallpaper",
+      "description": "Whether to span the desktop background across multiple monitors",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopTransparencyColor",
+      "type": "color",
+      "default": "",
+      "category": "Desktop/Wallpaper",
+      "description": "Color used for pseudo-transparency on the desktop",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "DesktopTransparencyImage",
+      "type": "filepath",
+      "default": "",
+      "category": "Desktop/Wallpaper",
+      "description": "Image used for pseudo-transparency on the desktop",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=12:bold",
+      "category": "Fonts",
+      "description": "Font for window title bars",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "MenuFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for menu items",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "StatusFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for status displays",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "NormalButtonFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for normal buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ActiveButtonFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10:bold",
+      "category": "Fonts",
+      "description": "Font for active (pressed) buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "NormalTaskBarFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for normal taskbar application buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ActiveTaskBarFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10:bold",
+      "category": "Fonts",
+      "description": "Font for the active taskbar application button",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ToolButtonFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for toolbar buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "NormalWorkspaceFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for normal workspace buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ActiveWorkspaceFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10:bold",
+      "category": "Fonts",
+      "description": "Font for the active workspace button",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "MinimizedWindowFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for minimized window icons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ListBoxFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for list box items",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ToolTipFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for tooltips",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ClockFontNameXft",
+      "type": "font",
+      "default": "monospace:size=10",
+      "category": "Fonts",
+      "description": "Font for the taskbar clock",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ApmFontNameXft",
+      "type": "font",
+      "default": "monospace:size=10",
+      "category": "Fonts",
+      "description": "Font for the APM/battery monitor",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "InputFontNameXft",
+      "type": "font",
+      "default": "monospace:size=10",
+      "category": "Fonts",
+      "description": "Font for input fields",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "LabelFontNameXft",
+      "type": "font",
+      "default": "sans-serif:size=10",
+      "category": "Fonts",
+      "description": "Font for labels",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "BorderSizeX",
+      "type": "int",
+      "default": "6",
+      "category": "Dimensions",
+      "description": "Horizontal window border thickness in pixels",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "BorderSizeY",
+      "type": "int",
+      "default": "6",
+      "category": "Dimensions",
+      "description": "Vertical window border thickness in pixels",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "DlgBorderSizeX",
+      "type": "int",
+      "default": "2",
+      "category": "Dimensions",
+      "description": "Horizontal dialog border thickness in pixels",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "DlgBorderSizeY",
+      "type": "int",
+      "default": "2",
+      "category": "Dimensions",
+      "description": "Vertical dialog border thickness in pixels",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "CornerSizeX",
+      "type": "int",
+      "default": "24",
+      "category": "Dimensions",
+      "description": "Horizontal size of the window corner resize area",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "CornerSizeY",
+      "type": "int",
+      "default": "24",
+      "category": "Dimensions",
+      "description": "Vertical size of the window corner resize area",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "TitleBarHeight",
+      "type": "int",
+      "default": "20",
+      "category": "Dimensions",
+      "description": "Height of the window title bar in pixels",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "TitleBarJustify",
+      "type": "int",
+      "default": "0",
+      "category": "Dimensions",
+      "description": "Horizontal text alignment in title bar (0=left, 50=center, 100=right)",
+      "min": 0,
+      "max": 100,
+      "choices": null
+    },
+    {
+      "name": "TitleBarHorzOffset",
+      "type": "int",
+      "default": "0",
+      "category": "Dimensions",
+      "description": "Horizontal pixel offset for title bar text",
+      "min": -128,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "TitleBarVertOffset",
+      "type": "int",
+      "default": "0",
+      "category": "Dimensions",
+      "description": "Vertical pixel offset for title bar text",
+      "min": -128,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "ScrollBarX",
+      "type": "int",
+      "default": "16",
+      "category": "Dimensions",
+      "description": "Width of vertical scroll bars in pixels",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "ScrollBarY",
+      "type": "int",
+      "default": "16",
+      "category": "Dimensions",
+      "description": "Height of horizontal scroll bars in pixels",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "MenuIconSize",
+      "type": "int",
+      "default": "16",
+      "category": "Dimensions",
+      "description": "Size of icons displayed in menus",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "SmallIconSize",
+      "type": "int",
+      "default": "16",
+      "category": "Dimensions",
+      "description": "Size of small icons (title bar, taskbar)",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "LargeIconSize",
+      "type": "int",
+      "default": "32",
+      "category": "Dimensions",
+      "description": "Size of large icons (quick switch, window list)",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "HugeIconSize",
+      "type": "int",
+      "default": "48",
+      "category": "Dimensions",
+      "description": "Size of huge icons",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "RolloverButtonsSupported",
+      "type": "bool",
+      "default": "0",
+      "category": "Behavior",
+      "description": "Whether the theme provides rollover (hover) button images",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TaskBarClockLeds",
+      "type": "bool",
+      "default": "1",
+      "category": "Behavior",
+      "description": "Whether to display the taskbar clock using LED-style digits",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TrayDrawBevel",
+      "type": "bool",
+      "default": "0",
+      "category": "Behavior",
+      "description": "Whether to draw a beveled edge around tray icons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "ShowMenuButtonIcon",
+      "type": "bool",
+      "default": "1",
+      "category": "Behavior",
+      "description": "Whether to show the application icon on the menu button",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleBarCentered",
+      "type": "bool",
+      "default": "0",
+      "category": "Behavior",
+      "description": "Whether the title bar text is centered between buttons",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleBarJoinLeft",
+      "type": "bool",
+      "default": "0",
+      "category": "Behavior",
+      "description": "Whether the title bar joins seamlessly with the left border",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleBarJoinRight",
+      "type": "bool",
+      "default": "0",
+      "category": "Behavior",
+      "description": "Whether the title bar joins seamlessly with the right border",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleButtonsLeft",
+      "type": "string",
+      "default": "s",
+      "category": "Button Layout",
+      "description": "Buttons on left side of title bar (s=sysmenu, x=close, m=maximize, i=minimize, h=hide, r=rollup, d=depth)",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleButtonsRight",
+      "type": "string",
+      "default": "xmir",
+      "category": "Button Layout",
+      "description": "Buttons on right side of title bar",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TitleButtonsSupported",
+      "type": "string",
+      "default": "xmis",
+      "category": "Button Layout",
+      "description": "Which title buttons are supported by the theme",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchHMargin",
+      "type": "int",
+      "default": "3",
+      "category": "QuickSwitch",
+      "description": "Horizontal margin inside the quick switch window",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchVMargin",
+      "type": "int",
+      "default": "3",
+      "category": "QuickSwitch",
+      "description": "Vertical margin inside the quick switch window",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchIMargin",
+      "type": "int",
+      "default": "4",
+      "category": "QuickSwitch",
+      "description": "Margin around icons in the quick switch window",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchIBorder",
+      "type": "int",
+      "default": "2",
+      "category": "QuickSwitch",
+      "description": "Border width around the selected icon in the quick switch window",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchSepSize",
+      "type": "int",
+      "default": "6",
+      "category": "QuickSwitch",
+      "description": "Size of the separator between icons and text in the quick switch window",
+      "min": 0,
+      "max": 64,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchIconSize",
+      "type": "int",
+      "default": "32",
+      "category": "QuickSwitch",
+      "description": "Size of icons in the quick switch window",
+      "min": 0,
+      "max": 128,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchTextFirst",
+      "type": "bool",
+      "default": "0",
+      "category": "QuickSwitch",
+      "description": "Whether to show text above icons in the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchSmallWindow",
+      "type": "bool",
+      "default": "0",
+      "category": "QuickSwitch",
+      "description": "Whether to use a smaller quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchMaxWidth",
+      "type": "int",
+      "default": "0",
+      "category": "QuickSwitch",
+      "description": "Maximum width of the quick switch window (0 for no limit)",
+      "min": 0,
+      "max": 4096,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchMaxHeight",
+      "type": "int",
+      "default": "0",
+      "category": "QuickSwitch",
+      "description": "Maximum height of the quick switch window (0 for no limit)",
+      "min": 0,
+      "max": 4096,
+      "choices": null
+    },
+    {
+      "name": "QuickSwitchFillSelection",
+      "type": "bool",
+      "default": "0",
+      "category": "QuickSwitch",
+      "description": "Whether to fill the background of the selected item in the quick switch window",
+      "min": null,
+      "max": null,
+      "choices": null
+    },
+    {
+      "name": "TaskBarCPUSamples",
+      "type": "int",
+      "default": "20",
+      "category": "Taskbar",
+      "description": "Number of samples displayed in the CPU monitor graph",
+      "min": 2,
+      "max": 1000,
+      "choices": null
+    },
+    {
+      "name": "TaskBarMEMSamples",
+      "type": "int",
+      "default": "20",
+      "category": "Taskbar",
+      "description": "Number of samples displayed in the memory monitor graph",
+      "min": 2,
+      "max": 1000,
+      "choices": null
+    },
+    {
+      "name": "TaskBarNetSamples",
+      "type": "int",
+      "default": "20",
+      "category": "Taskbar",
+      "description": "Number of samples displayed in the network monitor graph",
+      "min": 2,
+      "max": 1000,
+      "choices": null
+    },
+    {
+      "name": "TaskBarGraphHeight",
+      "type": "int",
+      "default": "20",
+      "category": "Taskbar",
+      "description": "Height of taskbar monitor graphs in pixels",
+      "min": 8,
+      "max": 256,
+      "choices": null
+    },
+    {
+      "name": "Gradients",
+      "type": "string",
+      "default": "",
+      "category": "Gradients",
+      "description": "Comma-separated gradient definitions for various elements",
+      "min": null,
+      "max": null,
+      "choices": null
+    }
+  ]
+}

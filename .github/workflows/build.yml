@@ -1,0 +1,65 @@
+name: Build and Package
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 1. Build Python Wheels (Standard Distribution)
+  build-wheels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-code: '3.10'
+      - name: Install build dependencies
+        run: pip install build
+      - name: Build wheel and sdist
+        run: python -m build
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package
+          path: dist/
+
+  # 2. Build AppImage (Standalone Binary)
+  # Supports x86_64 and aarch64 via QEMU
+  build-appimage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        if: matrix.arch == 'aarch64'
+        uses: docker/setup-qemu-action@v3
+      - name: Build AppImage
+        uses: AppImageCommunity/appimage-builder-action@v1
+        with:
+          recipe: AppImageBuilder.yml
+          arch: ${{ matrix.arch }}
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: IceSculpt-${{ matrix.arch }}.AppImage
+          path: ./*.AppImage
+
+  # 3. Build Flatpak (Sandboxed)
+  build-flatpak:
+    runs-on: ubuntu-latest
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-23.08
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v1
+        with:
+          bundle: IceSculpt.flatpak
+          manifest-path: org.icesculpt.IceSculpt.yml
+          stop-at-module: icesculpt
