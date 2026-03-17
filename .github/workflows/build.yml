@@ -21,12 +21,14 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y libgirepository1.0-dev libcairo2-dev pkg-config \
-                             gir1.2-gtk-3.0 python3-gi python3-gi-cairo xvfb
+                             gir1.2-gtk-3.0 python3-gi python3-gi-cairo xvfb \
+                             build-essential libdbus-1-dev
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest pytest-cov PyGObject pycairo
-          pip install -e .[test]
+          python -m pip install wheel
+          python -m pip install pytest pytest-cov PyGObject pycairo
+          python -m pip install -e .[test]
       - name: Run tests with coverage
         run: |
           xvfb-run pytest --cov=icesculpt --cov-report=xml
