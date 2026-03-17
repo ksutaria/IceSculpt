@@ -1,5 +1,8 @@
 # IceSculpt
 
+[![Build and Package](https://github.com/ksutaria/IceSculpt/actions/workflows/build.yml/badge.svg)](https://github.com/ksutaria/IceSculpt/actions)
+[![codecov](https://codecov.io/gh/ksutaria/IceSculpt/branch/main/graph/badge.svg)](https://codecov.io/gh/ksutaria/IceSculpt)
+
 IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window manager. It provides an intuitive, GTK3-based interface for creating, editing, and previewing IceWM themes without needing to manually edit configuration files or manually re-render XPM images.
 
 ![IceSculpt](https://via.placeholder.com/800x500.png?text=IceWM+Theme+Studio+Screenshot) *(Placeholder for screenshot)*
@@ -24,8 +27,8 @@ sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
 ### Install from Source
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/icesculpt.git
-   cd icesculpt
+   git clone https://github.com/ksutaria/IceSculpt.git
+   cd IceSculpt
    ```
 2. Install the package:
    ```bash

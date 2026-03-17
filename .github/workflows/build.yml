@@ -8,15 +8,45 @@ on:
     branches: [ main ]
 
 jobs:
-  # 1. Build Python Wheels (Standard Distribution)
-  build-wheels:
+  # 0. Run Tests and Coverage
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-code: '3.10'
+          python-version: '3.10'
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y libgirepository1.0-dev libcairo2-dev pkg-config \
+                             gir1.2-gtk-3.0 python3-gi python3-gi-cairo
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov PyGObject pycairo
+          pip install -e .
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=icesculpt --cov-report=xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: false
+
+  # 1. Build Python Wheels (Standard Distribution)
+  build-wheels:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
       - name: Install build dependencies
         run: pip install build
       - name: Build wheel and sdist
