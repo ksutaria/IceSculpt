@@ -63,9 +63,66 @@ jobs:
           name: python-package
           path: dist/*
 
-  # 3. Release (on Tags)
+  # 3. Build AppImage
+  build-appimage:
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        arch: [x86_64, aarch64]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        if: matrix.arch == 'aarch64'
+        uses: docker/setup-qemu-action@v3
+      - name: Prepare Recipe
+        run: |
+          # Map matrix arch to debian arch
+          DEB_ARCH=${{ matrix.arch }}
+          if [ "$DEB_ARCH" = "x86_64" ]; then DEB_ARCH="amd64"; fi
+          if [ "$DEB_ARCH" = "aarch64" ]; then DEB_ARCH="arm64"; fi
+          
+          sed -i "s/{{ ARCH }}/$DEB_ARCH/g" AppImageBuilder.yml
+      - name: Build AppImage
+        uses: docker://appimagecrafters/appimage-builder:latest
+        with:
+          entrypoint: /bin/bash
+          args: -c "appimage-builder --recipe AppImageBuilder.yml --skip-test"
+      - name: Rename and Verify AppImage
+        run: |
+          # The builder usually outputs something like IceSculpt-0.1.0-x86_64.AppImage
+          # We want IceSculpt-0.1.0-x86_64.appimage
+          for f in *.AppImage; do
+            mv "$f" "${f%.AppImage}.appimage"
+          done
+          ls -l *.appimage
+      - name: Upload AppImage
+        uses: actions/upload-artifact@v4
+        with:
+          name: IceSculpt-${{ matrix.arch }}.appimage
+          path: ./*.appimage
+
+  # 4. Build Flatpak (Sandboxed)
+  build-flatpak:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Flatpak
+        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
+        with:
+          bundle: IceSculpt.flatpak
+          manifest-path: org.icesculpt.IceSculpt.yml
+          stop-at-module: icesculpt
+      - name: Upload Flatpak
+        uses: actions/upload-artifact@v4
+        with:
+          name: IceSculpt.flatpak
+          path: IceSculpt.flatpak
+
+  # 5. Release (on Tags)
   release:
-    needs: [build-wheels]
+    needs: [build-wheels, build-appimage, build-flatpak]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
@@ -81,6 +138,9 @@ jobs:
         with:
           files: |
             release-artifacts/python-package/*
+            release-artifacts/IceSculpt-x86_64.appimage/*
+            release-artifacts/IceSculpt-aarch64.appimage/*
+            release-artifacts/IceSculpt.flatpak/*
           generate_release_notes: true
           draft: false
           prerelease: false

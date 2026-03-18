@@ -86,13 +86,13 @@ IceSculpt is built on a reactive, model-view-controller (MVC) inspired architect
 ```
 ┌───────────────────┐      ┌────────────────────┐      ┌─────────────────────┐
 │      Editors      │      │                    │      │       Preview       │
-│ (Color, Font, etc)│────┐ │     ThemeModel     │ ┌────│ (Taskbar, Window,   │
-└───────────────────┘    │ │ (Source of Truth)  │ │    │  Menu Rendering)    │
-                         ├─►                    ◄─┤    └─────────────────────┘
-┌───────────────────┐    │ │ 1. Fires Callbacks │ │      ▲
-│  User Interface   │────┘ └────────────────────┘ │      │
-│  (GTK Widgets)    │                            │      │ 2. Redraws on change
-└───────────────────┘                            └──────┘
+│ (Color, Font, etc)├─────►│     ThemeModel     ├─────►│ (Taskbar, Window,   │
+└───────────────────┘      │ (Source of Truth)  │      │  Menu Rendering)    │
+                           │                    │      └─────────────────────┘
+┌───────────────────┐      │ 1. Fires Callbacks │                ▲
+│  User Interface   ├─────►│ 2. Lossless IO     │                │
+│  (GTK Widgets)    │      │                    │────────────────┘
+└───────────────────┘      └────────────────────┘ 3. Triggers Redraw
 ```
 
 *   **`ThemeModel` (The "Model")**: This is the heart of the application. It acts as the single source of truth, holding all theme properties in memory. It knows nothing about the UI.
