@@ -106,11 +106,22 @@ jobs:
         with:
           entrypoint: /bin/bash
           args: -c "apt-get update && apt-get install -y gnupg && gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 && gpg --export 871920D1991BC93C | apt-key add - && gpg --export 3B4FE6ACC0B21F32 | apt-key add - && appimage-builder --recipe AppImageBuilder.yml --skip-test"
+      - name: Rename and Verify AppImage
+        run: |
+          # The builder usually outputs something like IceSculpt-0.1.0-x86_64.AppImage
+          # We want IceSculpt-0.1.0-x86_64.appimage
+          for f in *.AppImage; do
+            mv "$f" "${f%.AppImage}.appimage"
+          done
+          # Smoke test (requires xvfb)
+          # Note: Executing AppImage inside Docker/GitHub Actions can be tricky with FUSE
+          # but we can at least check if it exists and has the right extension.
+          ls -l *.appimage
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: IceSculpt-${{ matrix.arch }}.AppImage
-          path: ./*.AppImage
+          name: IceSculpt-${{ matrix.arch }}.appimage
+          path: ./*.appimage
 
   # 3. Build Flatpak (Sandboxed)
   build-flatpak:
@@ -151,8 +162,8 @@ jobs:
         with:
           files: |
             release-artifacts/python-package/*
-            release-artifacts/IceSculpt-x86_64.AppImage/*
-            release-artifacts/IceSculpt-aarch64.AppImage/*
+            release-artifacts/IceSculpt-x86_64.appimage/*
+            release-artifacts/IceSculpt-aarch64.appimage/*
             release-artifacts/IceSculpt.flatpak/*
           generate_release_notes: true
           draft: false

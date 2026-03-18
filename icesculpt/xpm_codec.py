@@ -65,7 +65,7 @@ class XpmImage:
         char = self.get_pixel(x, y)
         if char is not None:
             color = self.colors.get(char, "#000000")
-            if color.lower() == "none":
+            if color is None or color.lower() == "none":
                 return None
             return color
         return None

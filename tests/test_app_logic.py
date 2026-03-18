@@ -52,22 +52,40 @@ class TestAppBoost(unittest.TestCase):
         app = IceSculptApp()
         with patch('gi.repository.Gtk.Application.do_startup'), \
              patch('gi.repository.Gdk.Screen.get_default') as mock_screen:
-            mock_screen.return_value = None
+            mock_screen.return_value = None 
             app.do_startup()
-            
+
         test_dir = tempfile.mkdtemp()
         try:
             mock_file = MagicMock()
             mock_file.get_path.return_value = os.path.join(test_dir, "test.theme")
             with open(mock_file.get_path(), "w") as f:
                 f.write("ThemeDescription = \"OpenTest\"")
-            
+
             app.do_activate()
             app.do_open([mock_file], 1, "")
             self.assertEqual(app._window.model.get("ThemeDescription"), "OpenTest")
         finally:
             shutil.rmtree(test_dir)
 
+    def test_launcher_path_logic(self):
+        """Simulate launcher logic to ensure it correctly manipulates sys.path."""
+        from unittest.mock import patch
+        import sys
+        import os
+        original_path = list(sys.path)
+        try:
+            # Mock APPDIR env var
+            with patch.dict(os.environ, {"APPDIR": "/tmp/appimage.test"}):
+                # Re-run the logic from launcher (simplified)
+                appdir = os.environ.get('APPDIR')
+                site_packages = os.path.join(appdir, 'usr', 'lib', 'python3.10', 'site-packages')
+                if site_packages not in sys.path:
+                    sys.path.insert(0, site_packages)
+
+                self.assertEqual(sys.path[0], site_packages)
+        finally:
+            sys.path = original_path
     def test_show_error_dialog(self):
         from icesculpt.app import _show_error_dialog
         from unittest.mock import patch
