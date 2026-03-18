@@ -81,18 +81,18 @@ class TestUILogic(unittest.TestCase):
     def test_main_window_ops(self):
         app = IceSculptApp()
         win = MainWindow(app)
+        # MainWindow creates its own model, so use that one
+        model = win.model
 
         # Test toggle preview
-        active = win._toggle_preview_item.get_active()
         win._on_toggle_preview(win._toggle_preview_item)
 
         # Test status
         win._status("Testing coverage")
 
         # Test title update
-        self.model.set("ThemeDescription", "CoverageTheme")
+        model.set("ThemeDescription", "CoverageTheme")
         win._on_model_changed("ThemeDescription")
         self.assertIn("CoverageTheme", win.get_title())
-
 if __name__ == "__main__":
     unittest.main()

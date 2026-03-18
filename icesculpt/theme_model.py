@@ -85,13 +85,20 @@ class ThemeModel:
         self._key_registry = load_theme_keys()
         self._suppress_callbacks = False
         self._temp_dirs = []  # Temp dirs to clean up on exit or reload
+        self._theme_dir = None
 
     @property
     def theme_dir(self):
         """Directory containing the loaded theme file."""
+        if self._theme_dir:
+            return self._theme_dir
         if self.filepath:
             return os.path.dirname(self.filepath)
         return None
+
+    @theme_dir.setter
+    def theme_dir(self, value):
+        self._theme_dir = value
 
     @property
     def is_temp(self):

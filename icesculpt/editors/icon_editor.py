@@ -126,6 +126,9 @@ class IconEditor(Gtk.Box):
     def _show_error(self, message):
         toplevel = self.get_toplevel()
         parent = toplevel if isinstance(toplevel, Gtk.Window) else None
+        if parent is None:
+            print(f"Error: {message}")
+            return
         dialog = Gtk.MessageDialog(
             transient_for=parent,
             message_type=Gtk.MessageType.ERROR,

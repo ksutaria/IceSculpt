@@ -159,6 +159,9 @@ def _do_export(parent, model, output_path):
 
 
 def _show_error(parent, message):
+    if parent is None:
+        print(f"Error: {message}")
+        return
     dialog = Gtk.MessageDialog(
         transient_for=parent,
         message_type=Gtk.MessageType.ERROR,
