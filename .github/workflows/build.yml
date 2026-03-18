@@ -63,27 +63,9 @@ jobs:
           name: python-package
           path: dist/*
 
-  # 3. Build Flatpak (Sandboxed)
-  build-flatpak:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build Flatpak
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          bundle: IceSculpt.flatpak
-          manifest-path: org.icesculpt.IceSculpt.yml
-          stop-at-module: icesculpt
-      - name: Upload Flatpak
-        uses: actions/upload-artifact@v4
-        with:
-          name: IceSculpt.flatpak
-          path: IceSculpt.flatpak
-
-  # 4. Release (on Tags)
+  # 3. Release (on Tags)
   release:
-    needs: [build-wheels, build-flatpak]
+    needs: [build-wheels]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
@@ -99,7 +81,6 @@ jobs:
         with:
           files: |
             release-artifacts/python-package/*
-            release-artifacts/IceSculpt.flatpak/*
           generate_release_notes: true
           draft: false
           prerelease: false
