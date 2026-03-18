@@ -5,7 +5,7 @@
 
 IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window manager. It provides an intuitive, GTK3-based interface for creating, editing, and previewing IceWM themes without needing to manually edit configuration files or manually re-render XPM images.
 
-![IceSculpt](https://via.placeholder.com/800x500.png?text=IceWM+Theme+Studio+Screenshot) *(Placeholder for screenshot)*
+![IceSculpt Preview](docs/images/preview.png)
 
 ## Features
 
