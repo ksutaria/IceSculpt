@@ -6,56 +6,28 @@ AppDir:
     name: IceSculpt
     icon: icesculpt
     version: 0.1.0
-    exec: usr/bin/icesculpt
-    exec_args: "$@"
+    exec: usr/bin/python3
+    exec_args: "$APPDIR/usr/bin/icesculpt $@"
   apt:
-    arch:
-      - amd64
+    arch: amd64
     sources:
       - sourceline: deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
-      - sourceline: deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
-      - sourceline: deb [arch=amd64] http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
     include:
       - python3
       - python3-gi
       - python3-gi-cairo
       - gir1.2-gtk-3.0
       - libgtk-3-0
-      - libgirepository-1.0-1
-      - libcairo2
-      - libdbus-1-3
-      - libcanberra-gtk3-module
-      - libglib2.0-0
-      - libgdk-pixbuf2.0-0
-      - shared-mime-info
-      - desktop-file-utils
-      - adwaita-icon-theme
-      - hicolor-icon-theme
   runtime:
     env:
-      PYTHONHOME: '${APPDIR}/usr'
       PYTHONPATH: '${APPDIR}/usr/lib/python3.10/site-packages'
 
 AppImage:
   arch: x86_64
-  update-information: None
-  sign-key: None
 
 script:
-  - export DESTDIR=$TARGET_APPDIR
-  - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
-  - cp -r icesculpt $DESTDIR/usr/lib/python3.10/site-packages/
-  - mkdir -p $DESTDIR/usr/bin
-  - cp icesculpt/icesculpt-launcher $DESTDIR/usr/bin/icesculpt
-  - chmod +x $DESTDIR/usr/bin/icesculpt
-  - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
-  - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
-  - mkdir -p $DESTDIR/usr/share/applications
-  - cat > $DESTDIR/usr/share/applications/org.icesculpt.IceSculpt.desktop <<EOF
-[Desktop Entry]
-Type=Application
-Name=IceSculpt
-Exec=icesculpt
-Icon=icesculpt
-Categories=Utility;Settings;
-EOF
+  - mkdir -p $TARGET_APPDIR/usr/lib/python3.10/site-packages
+  - cp -r icesculpt $TARGET_APPDIR/usr/lib/python3.10/site-packages/
+  - mkdir -p $TARGET_APPDIR/usr/bin
+  - cp icesculpt/icesculpt-launcher $TARGET_APPDIR/usr/bin/icesculpt
+  - chmod +x $TARGET_APPDIR/usr/bin/icesculpt
