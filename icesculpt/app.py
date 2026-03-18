@@ -59,7 +59,7 @@ def _install_global_exception_hook():
     sys.excepthook = _hook
 
 
-class ThemeStudioApp(Gtk.Application):
+class IceSculptApp(Gtk.Application):
     """Main GTK application."""
 
     def __init__(self):
@@ -108,7 +108,7 @@ class ThemeStudioApp(Gtk.Application):
 def main():
     """Entry point."""
     _install_global_exception_hook()
-    app = ThemeStudioApp()
+    app = IceSculptApp()
     return app.run(sys.argv)
 
 
