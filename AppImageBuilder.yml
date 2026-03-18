@@ -46,11 +46,6 @@ AppImage:
 
 script:
   - export DESTDIR=$TARGET_APPDIR
-  - apt-get update || true
-  - apt-get install -y gnupg
-  - gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || true
-  - gpg --export 871920D1991BC93C | apt-key add - || true
-  - gpg --export 3B4FE6ACC0B21F32 | apt-key add - || true
   - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
   - cp -r icesculpt $DESTDIR/usr/lib/python3.10/site-packages/
   - mkdir -p $DESTDIR/usr/bin
@@ -59,5 +54,11 @@ script:
   - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
   - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
   - mkdir -p $DESTDIR/usr/share/applications
-  - echo -e "[Desktop Entry]\nType=Application\nName=IceSculpt\nExec=icesculpt\nIcon=icesculpt\nCategories=Utility;Settings;" > $DESTDIR/usr/share/applications/org.icesculpt.IceSculpt.desktop
-  - update-mime-database $DESTDIR/usr/share/mime || true
+  - cat > $DESTDIR/usr/share/applications/org.icesculpt.IceSculpt.desktop <<EOF
+    [Desktop Entry]
+    Type=Application
+    Name=IceSculpt
+    Exec=icesculpt
+    Icon=icesculpt
+    Categories=Utility;Settings;
+    EOF

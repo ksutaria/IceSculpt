@@ -105,7 +105,7 @@ jobs:
         uses: docker://appimagecrafters/appimage-builder:latest
         with:
           entrypoint: /bin/bash
-          args: -c "apt-get update && apt-get install -y gnupg && gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 && gpg --export 871920D1991BC93C | apt-key add - && gpg --export 3B4FE6ACC0B21F32 | apt-key add - && appimage-builder --recipe AppImageBuilder.yml --skip-test"
+          args: -c "appimage-builder --recipe AppImageBuilder.yml --skip-test"
       - name: Rename and Verify AppImage
         run: |
           # The builder usually outputs something like IceSculpt-0.1.0-x86_64.AppImage
