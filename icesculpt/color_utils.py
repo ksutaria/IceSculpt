@@ -284,3 +284,47 @@ def blend(hex_color1, hex_color2, ratio=0.5):
     g = g1 + (g2 - g1) * ratio
     b = b1 + (b2 - b1) * ratio
     return rgba_to_hex(r, g, b)
+
+
+def get_luminance(hex_color):
+    """Calculate the relative luminance of a color.
+    
+    Formula based on W3C relative luminance definition.
+    """
+    r, g, b, _ = hex_to_rgba(hex_color)
+    
+    def adjust(c):
+        if c <= 0.03928:
+            return c / 12.92
+        return ((c + 0.055) / 1.055) ** 2.4
+    
+    r = adjust(r)
+    g = adjust(g)
+    b = adjust(b)
+    
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+
+
+def get_contrast_ratio(hex1, hex2):
+    """Calculate the contrast ratio between two colors (1.0 to 21.0)."""
+    l1 = get_luminance(hex1)
+    l2 = get_luminance(hex2)
+    
+    if l1 < l2:
+        l1, l2 = l2, l1
+        
+    return (l1 + 0.05) / (l2 + 0.05)
+
+
+def get_hls(hex_color):
+    """Convert hex to HLS (0.0-1.0)."""
+    import colorsys
+    r, g, b, _ = hex_to_rgba(hex_color)
+    return colorsys.rgb_to_hls(r, g, b)
+
+
+def hls_to_hex(h, l, s):
+    """Convert HLS to hex."""
+    import colorsys
+    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    return rgba_to_hex(r, g, b)

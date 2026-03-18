@@ -104,6 +104,38 @@ class XpmImage:
         img.pixels = list(self.pixels)
         return img
 
+    def recolor(self, hue_shift=0.0, saturation_factor=1.0, luminance_factor=1.0):
+        """Recolor all colors in the image using HLS transformation.
+        
+        Args:
+            hue_shift: Shift in hue (0.0 to 1.0).
+            saturation_factor: Multiplier for saturation.
+            luminance_factor: Multiplier for luminance.
+        """
+        import colorsys
+        from .color_utils import hex_to_rgba, rgba_to_hex
+
+        new_colors = {}
+        for char, color_str in self.colors.items():
+            if color_str is None or color_str.lower() == "none":
+                new_colors[char] = color_str
+                continue
+            
+            # Convert to HLS
+            r, g, b, _ = hex_to_rgba(color_str)
+            h, l, s = colorsys.rgb_to_hls(r, g, b)
+            
+            # Apply shifts
+            h = (h + hue_shift) % 1.0
+            s = max(0.0, min(1.0, s * saturation_factor))
+            l = max(0.0, min(1.0, l * luminance_factor))
+            
+            # Back to hex
+            nr, ng, nb = colorsys.hls_to_rgb(h, l, s)
+            new_colors[char] = rgba_to_hex(nr, ng, nb)
+        
+        self.colors = new_colors
+
 
 # Characters for color allocation (single cpp)
 _ALLOC_CHARS = (

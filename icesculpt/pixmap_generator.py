@@ -293,3 +293,35 @@ def generate_all_frames(border_x, border_y, corner_x, corner_y, theme_model):
             results[filename] = generate_frame_piece(position, w, h, bg, active)
 
     return results
+
+
+def recolor_all_pixmaps(theme_dir, hue_shift=0.0, saturation_factor=1.0, luminance_factor=1.0):
+    """Recolor all XPM files in the theme directory.
+    
+    Args:
+        theme_dir: Directory containing .xpm files.
+        hue_shift: Shift in hue (0.0 to 1.0).
+        saturation_factor: Multiplier for saturation.
+        luminance_factor: Multiplier for luminance.
+    
+    Returns:
+        List of filenames that were successfully recolored.
+    """
+    import os
+    recolored = []
+    if not theme_dir or not os.path.exists(theme_dir):
+        return recolored
+
+    for filename in os.listdir(theme_dir):
+        if filename.lower().endswith(".xpm"):
+            path = os.path.join(theme_dir, filename)
+            try:
+                img = xpm_codec.read_xpm_file(path)
+                img.recolor(hue_shift, saturation_factor, luminance_factor)
+                xpm_codec.write_xpm_file(path, img)
+                recolored.append(filename)
+            except Exception:
+                # Skip files that can't be parsed
+                continue
+    
+    return recolored

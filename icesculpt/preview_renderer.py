@@ -15,6 +15,7 @@ class PreviewRenderer:
     def __init__(self, model):
         """Initialize with a ThemeModel instance."""
         self.model = model
+        self.force_active = None  # None = draw both, True = only active, False = only inactive
 
     def render(self, cr, width, height):
         """Render the full preview scene.
@@ -32,17 +33,22 @@ class PreviewRenderer:
         desktop_h = height - taskbar_h
 
         # Draw inactive window first (behind)
-        if desktop_h > 120 and width > 200:
+        if self.force_active is None or self.force_active is False:
             self._draw_window(cr, active=False,
                               x=width * 0.35, y=desktop_h * 0.1,
                               w=width * 0.55, h=desktop_h * 0.55,
                               title="Inactive Window")
 
         # Draw active window on top
-        if desktop_h > 100 and width > 160:
+        if self.force_active is None or self.force_active is True:
+            # Shift position if only active is shown
+            x = width * 0.05 if self.force_active is None else width * 0.2
+            y = desktop_h * 0.15 if self.force_active is None else desktop_h * 0.15
+            w = width * 0.6 if self.force_active is None else width * 0.6
+            h = desktop_h * 0.65 if self.force_active is None else desktop_h * 0.65
+            
             self._draw_window(cr, active=True,
-                              x=width * 0.05, y=desktop_h * 0.15,
-                              w=width * 0.6, h=desktop_h * 0.65,
+                              x=x, y=y, w=w, h=h,
                               title="Active Window")
 
         # Draw taskbar

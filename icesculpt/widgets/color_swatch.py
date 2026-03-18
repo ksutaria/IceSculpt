@@ -62,9 +62,19 @@ class ColorSwatch(Gtk.DrawingArea):
                     cr.rectangle(col, row, sq, sq)
                     cr.fill()
 
-        # Draw the color
-        r, g, b, _ = hex_to_rgba(self._hex)
-        cr.set_source_rgb(r, g, b)
+        # Draw the color or gradient
+        if ',' in self._hex:
+            # Gradient
+            pat = cr.create_linear_pattern(0, 0, w, h)
+            colors = self._hex.split(',')
+            for i, c in enumerate(colors):
+                r, g, b, _ = hex_to_rgba(c.strip())
+                pat.add_color_stop_rgb(i / max(1, len(colors) - 1), r, g, b)
+            cr.set_source(pat)
+        else:
+            r, g, b, _ = hex_to_rgba(self._hex)
+            cr.set_source_rgb(r, g, b)
+        
         cr.rectangle(0, 0, w, h)
         cr.fill()
 
@@ -93,6 +103,25 @@ class ColorSwatch(Gtk.DrawingArea):
     def _open_color_dialog(self):
         toplevel = self.get_toplevel()
         parent = toplevel if isinstance(toplevel, Gtk.Window) else None
+
+        if ',' in self._hex:
+            from .gradient_builder import GradientBuilder
+            dialog = Gtk.Dialog(title="Edit Gradient", transient_for=parent)
+            dialog.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+            
+            def on_grad_changed(new_val):
+                self._hex = new_val
+                self.queue_draw()
+                self.emit("color-changed", new_val)
+
+            builder = GradientBuilder(self._hex, on_grad_changed)
+            dialog.get_content_area().add(builder)
+            dialog.set_default_size(300, 400)
+            dialog.show_all()
+            dialog.run()
+            dialog.destroy()
+            return
+
         dialog = Gtk.ColorChooserDialog(
             title="Choose Color",
             transient_for=parent,

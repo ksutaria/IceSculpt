@@ -42,6 +42,11 @@ class PixmapEditor(Gtk.Box):
         refresh_btn.connect("clicked", self._on_refresh)
         toolbar.pack_start(refresh_btn, False, False, 0)
 
+        recolor_btn = Gtk.Button(label="Recolor All")
+        recolor_btn.set_tooltip_text("Apply global hue/sat/lum shift to all XPM assets")
+        recolor_btn.connect("clicked", self._on_recolor_all_clicked)
+        toolbar.pack_start(recolor_btn, False, False, 0)
+
         self.pack_start(toolbar, False, False, 0)
 
         # Main content: file list + pixel editor
@@ -157,6 +162,54 @@ class PixmapEditor(Gtk.Box):
 
     def _on_refresh(self, widget):
         self._refresh_file_list()
+
+    def _on_recolor_all_clicked(self, widget):
+        theme_dir = self.model.theme_dir
+        if not theme_dir:
+            self._show_error("Save the theme first.")
+            return
+
+        dialog = Gtk.Dialog(title="Recolor All Pixmaps", parent=self.get_toplevel(), flags=0)
+        dialog.add_buttons(Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL, Gtk.STOCK_APPLY, Gtk.ResponseType.OK)
+        
+        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        vbox.set_margin_start(10)
+        vbox.set_margin_end(10)
+        vbox.set_margin_top(10)
+        
+        # Hue slider
+        vbox.pack_start(Gtk.Label(label="Hue Shift", xalign=0), False, False, 0)
+        hue_adj = Gtk.Adjustment(value=0, lower=0, upper=1, step_increment=0.01)
+        hue_scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=hue_adj)
+        vbox.pack_start(hue_scale, False, False, 0)
+        
+        # Saturation slider
+        vbox.pack_start(Gtk.Label(label="Saturation Factor", xalign=0), False, False, 0)
+        sat_adj = Gtk.Adjustment(value=1, lower=0, upper=3, step_increment=0.1)
+        sat_scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=sat_adj)
+        vbox.pack_start(sat_scale, False, False, 0)
+        
+        # Luminance slider
+        vbox.pack_start(Gtk.Label(label="Luminance Factor", xalign=0), False, False, 0)
+        lum_adj = Gtk.Adjustment(value=1, lower=0, upper=3, step_increment=0.1)
+        lum_scale = Gtk.Scale(orientation=Gtk.Orientation.HORIZONTAL, adjustment=lum_adj)
+        vbox.pack_start(lum_scale, False, False, 0)
+        
+        dialog.get_content_area().add(vbox)
+        dialog.show_all()
+        
+        if dialog.run() == Gtk.ResponseType.OK:
+            from ..pixmap_generator import recolor_all_pixmaps
+            recolored = recolor_all_pixmaps(
+                theme_dir, 
+                hue_adj.get_value(), 
+                sat_adj.get_value(), 
+                lum_adj.get_value()
+            )
+            self._info_label.set_text(f"Recolored {len(recolored)} pixmaps.")
+            self._refresh_file_list()
+            
+        dialog.destroy()
 
     def _on_generate_buttons(self, widget):
         theme_dir = self.model.theme_dir

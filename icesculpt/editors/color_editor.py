@@ -163,17 +163,27 @@ class ColorEditor(Gtk.ScrolledWindow):
                 grid.attach(label, 0, row_idx, 1, 1)
 
                 # Color swatch
+                val = model.get(key)
                 hex_color = model.get_color_hex(key, "#808080")
-                swatch = ColorSwatch(hex_color, size=28)
+                display_val = val if ',' in val else hex_color
+                
+                swatch = ColorSwatch(display_val, size=28)
                 swatch.connect("color-changed", self._on_swatch_changed, key)
                 grid.attach(swatch, 1, row_idx, 1, 1)
 
                 # Hex label
-                hex_label = Gtk.Label(label=hex_color)
+                label_str = "Gradient" if ',' in val else hex_color
+                hex_label = Gtk.Label(label=label_str)
                 hex_label.set_xalign(0)
                 hex_label.set_width_chars(8)
                 hex_label.get_style_context().add_class("monospace")
                 grid.attach(hex_label, 2, row_idx, 1, 1)
+                
+                # Make Gradient button
+                grad_btn = Gtk.Button.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON)
+                grad_btn.set_tooltip_text("Convert to Gradient")
+                grad_btn.connect("clicked", self._on_make_gradient_clicked, key)
+                grid.attach(grad_btn, 3, row_idx, 1, 1)
 
                 self._swatches[key] = (swatch, hex_label)
 
@@ -187,22 +197,36 @@ class ColorEditor(Gtk.ScrolledWindow):
 
     def _on_swatch_changed(self, swatch, hex_color, key):
         """Handle color swatch change — update model."""
-        self.model.set_color_hex(key, hex_color)
+        if ',' in hex_color:
+            self.model.set(key, hex_color)
+        else:
+            self.model.set_color_hex(key, hex_color)
+        
         # Update hex label
         if key in self._swatches:
             _, hex_label = self._swatches[key]
-            hex_label.set_text(hex_color)
+            hex_label.set_text("Gradient" if ',' in hex_color else hex_color)
+
+    def _on_make_gradient_clicked(self, btn, key):
+        val = self.model.get(key)
+        if ',' not in val:
+            h = self.model.get_color_hex(key)
+            self.model.set(key, f"{h},{h}")
 
     def _on_model_changed(self, key):
         """Handle model change — update swatch if needed."""
         if key is None:
             # Full reload
             for k, (swatch, hex_label) in self._swatches.items():
-                hex_color = self.model.get_color_hex(k, "#808080")
-                swatch.hex_color = hex_color
-                hex_label.set_text(hex_color)
+                val = self.model.get(k)
+                h = self.model.get_color_hex(k, "#808080")
+                display_val = val if ',' in val else h
+                swatch.hex_color = display_val
+                hex_label.set_text("Gradient" if ',' in display_val else h)
         elif key in self._swatches:
             swatch, hex_label = self._swatches[key]
-            hex_color = self.model.get_color_hex(key, "#808080")
-            swatch.hex_color = hex_color
-            hex_label.set_text(hex_color)
+            val = self.model.get(key)
+            h = self.model.get_color_hex(key, "#808080")
+            display_val = val if ',' in val else h
+            swatch.hex_color = display_val
+            hex_label.set_text("Gradient" if ',' in display_val else h)
