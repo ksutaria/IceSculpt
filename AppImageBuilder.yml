@@ -35,6 +35,7 @@ AppImage:
   arch: x86_64
   update-information: None
   sign-key: None
+  zsync: None
 
 script:
   - export DESTDIR=$TARGET_APPDIR
