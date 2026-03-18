@@ -11,6 +11,7 @@ jobs:
   # 0. Static Analysis (Linter)
   lint:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -26,6 +27,7 @@ jobs:
   test:
     needs: lint
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
