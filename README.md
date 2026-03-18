@@ -1,7 +1,7 @@
 # IceSculpt
 
 [![Build and Package](https://github.com/ksutaria/IceSculpt/actions/workflows/build.yml/badge.svg)](https://github.com/ksutaria/IceSculpt/actions)
-[![codecov](https://codecov.io/gh/ksutaria/IceSculpt/branch/main/graph/badge.svg)](https://codecov.io/gh/ksutaria/IceSculpt)
+[![codecov](https://codecov.io/gh/ksutaria/IceSculpt/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ksutaria/IceSculpt)
 
 IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window manager. It provides an intuitive, GTK3-based interface for creating, editing, and previewing IceWM themes without needing to manually edit configuration files or manually re-render XPM images.
 
