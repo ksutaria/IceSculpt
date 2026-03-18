@@ -50,4 +50,3 @@ script:
   - chmod +x $DESTDIR/usr/bin/icesculpt
   - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
   - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
-  - rm -f *.zsync

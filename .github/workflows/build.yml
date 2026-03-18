@@ -73,7 +73,6 @@ jobs:
           path: dist/
 
   # 2. Build AppImage (Standalone Binary)
-  # Supports x86_64 and aarch64 via QEMU
   build-appimage:
     needs: test
     runs-on: ubuntu-latest
@@ -86,15 +85,15 @@ jobs:
         if: matrix.arch == 'aarch64'
         uses: docker/setup-qemu-action@v3
       - name: Build AppImage
-        uses: AppImageCrafters/build-appimage-action@v1
+        uses: docker://appimagecrafters/appimage-builder:latest
         with:
-          recipe: AppImageBuilder.yml
-          arch: ${{ matrix.arch }}
+          entrypoint: /bin/bash
+          args: -c "apt-get update && apt-get install -y gnupg && gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 && gpg --export 871920D1991BC93C | apt-key add - && gpg --export 3B4FE6ACC0B21F32 | apt-key add - && appimage-builder --recipe AppImageBuilder.yml --skip-test"
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
           name: IceSculpt-${{ matrix.arch }}.AppImage
-          path: IceSculpt-*.AppImage
+          path: ./*.AppImage
 
   # 3. Build Flatpak (Sandboxed)
   build-flatpak:
