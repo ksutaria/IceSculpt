@@ -5,6 +5,7 @@ AppDir:
     id: org.icesculpt.IceSculpt
     name: IceSculpt
     icon: icesculpt
+    version: 0.1.0
     exec: usr/bin/icesculpt
     exec_args: "$@"
   apt:
