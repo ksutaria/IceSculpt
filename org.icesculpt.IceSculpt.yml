@@ -17,14 +17,14 @@ modules:
     sources:
       - type: archive
         url: https://github.com/pygobject/pycairo/releases/download/v1.26.0/pycairo-1.26.0.tar.gz
-        sha256: fdec9aa4a6ef6f00096690fa9900ee06026df006969ee690cb0fe699bb004ed5
+        sha256: 2dddd0a874fbddb21e14acd9b955881ee1dc6e63b9c549a192d613a907f9cbeb
 
   - name: python3-pygobject
     buildsystem: meson
     sources:
       - type: archive
         url: https://download.gnome.org/sources/pygobject/3.48/pygobject-3.48.2.tar.xz
-        sha256: db0ef0306ea60cd90ca00006da590013db62bc06900690060000000000000000
+        sha256: 7eaae30453f4995299fca46c867618ade399c154709f0d3ebbb0da80236c2ac6
 
   - name: icesculpt
     buildsystem: python
