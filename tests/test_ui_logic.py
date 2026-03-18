@@ -44,9 +44,9 @@ class TestUILogic(unittest.TestCase):
         area = PreviewArea(self.model)
         # Trigger model change to exercise redraw scheduling
         self.model.set("ColorActiveTitleBar", "rgb:11/22/33")
-        # Run main loop briefly to process idle tasks
-        while GLib.main_context_default().iteration(False):
-            pass
+        # Run main loop briefly to process idle tasks (capped to avoid hangs)
+        for _ in range(10):
+            GLib.main_context_default().iteration(False)
 
         # Test mode toggles
         area.btn_active.set_active(True)

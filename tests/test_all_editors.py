@@ -46,6 +46,9 @@ class TestEditors(unittest.TestCase):
         # ... (implementation dependent, but just exercising instantiation helps)
         self.model.set("ThemeDescription", "New Desc")
         # Ensure it doesn't crash on model update
+        from gi.repository import GLib
+        for _ in range(10):
+            GLib.main_context_default().iteration(False)
 
 if __name__ == "__main__":
     unittest.main()
