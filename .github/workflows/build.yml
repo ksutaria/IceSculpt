@@ -25,15 +25,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Update apt
-        run: sudo apt-get update
       - name: Install system dependencies
         run: |
-          sudo apt-get install -y --fix-missing libgirepository1.0-dev libcairo2-dev pkg-config \
-                           python3-dev gir1.2-gtk-3.0 python3-gi python3-gi-cairo \
-                           python3-pytest python3-pytest-cov ruff xvfb
-      - name: Install package
-        run: pip install --no-deps -e .
+          sudo apt-get update
+          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config \
+                           python3-dev gir1.2-gtk-3.0 python3-gi python3-gi-cairo xvfb
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov ruff
+          pip install --no-deps -e .
       - name: Run tests with coverage
         run: |
           xvfb-run pytest --cov=icesculpt --cov-report=xml
@@ -49,11 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Update apt
-        run: sudo apt-get update
       - name: Install system dependencies
         run: |
-          sudo apt-get install -y --fix-missing libgirepository1.0-dev libcairo2-dev pkg-config \
+          sudo apt-get update
+          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config \
                            python3-dev gir1.2-gtk-3.0 python3-gi python3-build
       - name: Build wheel and sdist
         run: python3 -m build
