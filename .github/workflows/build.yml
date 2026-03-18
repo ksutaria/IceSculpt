@@ -101,7 +101,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     container:
-      image: bilelmoussaoui/flatpak-github-actions:freedesktop-23.08
+      image: bilelmoussaoui/flatpak-github-actions:gnome-45
     steps:
       - uses: actions/checkout@v4
       - name: Build Flatpak
