@@ -36,5 +36,5 @@ script:
   - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
   - cp -r icesculpt $DESTDIR/usr/lib/python3.10/site-packages/
   - mkdir -p $DESTDIR/usr/bin
-  - cp icesculpt $DESTDIR/usr/bin/
+  - cp icesculpt/icestudio-launcher $DESTDIR/usr/bin/icesculpt
   - chmod +x $DESTDIR/usr/bin/icesculpt
