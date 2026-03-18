@@ -72,41 +72,12 @@ jobs:
           name: python-package
           path: dist/
 
-  # 2. Build AppImage (Standalone Binary)
-  # Supports x86_64 and aarch64 via QEMU
-  build-appimage:
-    needs: test
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        arch: [x86_64, aarch64]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up QEMU
-        if: matrix.arch == 'aarch64'
-        uses: docker/setup-qemu-action@v3
-      - name: Build AppImage
-        uses: AppImageCrafters/build-appimage-action@v1
-        with:
-          recipe: AppImageBuilder.yml
-          arch: ${{ matrix.arch }}
-      - name: Upload AppImage
-        uses: actions/upload-artifact@v4
-        with:
-          name: IceSculpt-${{ matrix.arch }}.AppImage
-          path: ./*.AppImage
+  # 2. Build AppImage (Standalone Binary) - DISABLED TEMPORARILY
+  # build-appimage:
+  #   needs: test
+  #   ...
 
-  # 3. Build Flatpak (Sandboxed)
-  build-flatpak:
-    needs: test
-    runs-on: ubuntu-latest
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-45
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build Flatpak
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v1
-        with:
-          bundle: IceSculpt.flatpak
-          manifest-path: org.icesculpt.IceSculpt.yml
-          stop-at-module: icesculpt
+  # 3. Build Flatpak (Sandboxed) - DISABLED TEMPORARILY
+  # build-flatpak:
+  #   needs: test
+  #   ...
