@@ -173,6 +173,33 @@ class TestThemeModel(unittest.TestCase):
         self.assertEqual(self.model.get("Key"), "Val")
         self.assertEqual(self.model.filepath, "/some/path")
 
+    def test_model_save_dir_exists(self):
+        src_dir = os.path.join(self.test_dir, "src2")
+        os.makedirs(src_dir)
+        with open(os.path.join(src_dir, "asset.xpm"), "w") as f:
+            f.write("/* XPM */")
+        theme_file = os.path.join(src_dir, "default.theme")
+        with open(theme_file, "w") as f:
+            f.write("ThemeDescription = \"Test\"")
+        self.model.load_file(theme_file)
+        # Target dir already exists
+        dst_dir = os.path.join(self.test_dir, "dst2")
+        os.makedirs(dst_dir)
+        # Put another asset there to trigger item copy logic
+        with open(os.path.join(dst_dir, "other.xpm"), "w") as f:
+            f.write("/* XPM */")
+        self.model.save(os.path.join(dst_dir, "default.theme"))
+        self.assertTrue(os.path.exists(os.path.join(dst_dir, "asset.xpm")))
+
+    def test_model_callback_filter_match(self):
+        called = False
+        def cb(k):
+            nonlocal called
+            called = True
+        self.model.connect(cb, key_filter="MatchKey")
+        self.model.set("MatchKey", "Val")
+        self.assertTrue(called)
+
     def test_load_theme_keys_default(self):
         from icesculpt.theme_model import load_theme_keys
         keys = load_theme_keys() # Test default path

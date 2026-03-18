@@ -7,6 +7,16 @@ IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window m
 
 ![IceSculpt Preview](docs/images/preview.png)
 
+## Screenshots
+
+### Comprehensive Property Editor
+Edit over 70 color properties with real-time feedback. Switch between solid colors and multi-color gradients easily.
+![Color Editor](docs/images/ui_color_editor.png)
+
+### Taskbar and Menu Previews
+Accurately preview how your theme will look in action, including the taskbar, start menu, and tooltips.
+![Taskbar Editor](docs/images/ui_taskbar_editor.png)
+
 ## Features
 
 * **Real-time Preview:** See changes instantly as you edit colors, fonts, and dimensions. The preview uses Cairo to accurately simulate the IceWM desktop, taskbar, and menus.
