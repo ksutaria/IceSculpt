@@ -2,6 +2,11 @@
 
 [![Build and Package](https://github.com/ksutaria/IceSculpt/actions/workflows/build.yml/badge.svg)](https://github.com/ksutaria/IceSculpt/actions)
 [![codecov](https://codecov.io/gh/ksutaria/IceSculpt/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ksutaria/IceSculpt)
+[![GitHub release](https://img.shields.io/github/v/release/ksutaria/IceSculpt)](https://github.com/ksutaria/IceSculpt/releases)
+[![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/github/license/ksutaria/IceSculpt)](LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/ksutaria/IceSculpt)](https://github.com/ksutaria/IceSculpt/issues)
+[![GitHub stars](https://img.shields.io/github/stars/ksutaria/IceSculpt)](https://github.com/ksutaria/IceSculpt/stargazers)
 
 IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window manager. It provides an intuitive, GTK3-based interface for creating, editing, and previewing IceWM themes without needing to manually edit configuration files or manually re-render XPM images.
 
