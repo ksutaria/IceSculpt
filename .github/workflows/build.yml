@@ -29,22 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
       - name: Install system dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config \
-                           python3-dev gir1.2-gtk-3.0 python3-gi python3-gi-cairo xvfb
-      - name: Set PKG_CONFIG_PATH
-        run: echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig" >> $GITHUB_ENV
-      - name: Install dependencies
-        run: |
-          sudo apt-get install -y python3-pytest python3-pytest-cov ruff
-          # Install current package in editable mode without trying to rebuild dependencies
-          pip install --no-deps -e .
+                           python3-dev gir1.2-gtk-3.0 python3-gi python3-gi-cairo \
+                           python3-pytest python3-pytest-cov ruff xvfb
+      - name: Install package
+        run: pip install --no-deps -e .
       - name: Run tests with coverage
         run: |
           xvfb-run pytest --cov=icesculpt --cov-report=xml
@@ -60,17 +52,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Set PKG_CONFIG_PATH
+      - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config
-          echo "PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig" >> $GITHUB_ENV
-      - name: Install system dependencies
-        run: sudo apt-get install -y gir1.2-gtk-3.0 python3-gi python3-build
+          sudo apt-get install -y libgirepository1.0-dev libcairo2-dev pkg-config \
+                           python3-dev gir1.2-gtk-3.0 python3-gi python3-build
       - name: Build wheel and sdist
         run: python3 -m build
       - name: Upload artifacts
