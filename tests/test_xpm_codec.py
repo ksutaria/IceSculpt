@@ -151,11 +151,11 @@ class TestXpmCodecBoost(unittest.TestCase):
         with self.assertRaises(ValueError):
             xpm_codec.parse_xpm("no strings here")
         with self.assertRaises(ValueError):
-            xpm_codec.parse_xpm('"10 10 1 1"') 
+            xpm_codec.parse_xpm('"10 10 1 1"')
         with self.assertRaises(ValueError):
-            xpm_codec.parse_xpm('"1 1 2 1", "char c #000000"') 
+            xpm_codec.parse_xpm('"1 1 2 1", "char c #000000"')
         with self.assertRaises(ValueError):
-            xpm_codec.parse_xpm('"1 1 1 1", "char c #000000"') 
+            xpm_codec.parse_xpm('"1 1 1 1", "char c #000000"')
 
     def test_xpm_gradients_large(self):
         from icesculpt import xpm_codec

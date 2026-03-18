@@ -110,7 +110,7 @@ class TestThemeModel(unittest.TestCase):
         self.assertEqual(self.model.get("ColorActiveTitleBar"), reg["ColorActiveTitleBar"].default)
 
     def test_model_temp_dirs(self):
-        self.assertFalse(self.model.is_temp) 
+        self.assertFalse(self.model.is_temp)
         d = tempfile.mkdtemp(dir=self.test_dir)
         self.model.register_temp_dir(d)
         self.model.theme_dir = None
@@ -119,7 +119,7 @@ class TestThemeModel(unittest.TestCase):
         self.assertFalse(self.model.is_temp)
         self.model.theme_dir = os.path.join(d, "subdir")
         self.assertTrue(self.model.is_temp)
-        self.model.new_theme() 
+        self.model.new_theme()
         self.assertFalse(os.path.exists(d))
 
     def test_model_snapshot_and_disconnect(self):
@@ -129,17 +129,21 @@ class TestThemeModel(unittest.TestCase):
         self.model.restore_snapshot(snapshot)
         self.assertEqual(self.model.get("K1"), "V1_new")
         self.assertEqual(self.model.get("K3"), "V3")
-        self.assertEqual(self.model.get("K2"), "") 
+        self.assertEqual(self.model.get("K2"), "")
 
         called = False
-        def cb(k): nonlocal called; called = True
+        def cb(k):
+            nonlocal called
+            called = True
         cid = self.model.connect(cb)
         self.model.disconnect(cid)
         self.model.set("X", "Y")
         self.assertFalse(called)
         
         called_count = 0
-        def cb2(k): nonlocal called_count; called_count += 1
+        def cb2(k):
+            nonlocal called_count
+            called_count += 1
         self.model.connect(cb2, key_filter=["F1", "F2"])
         self.model.set("F1", "V")
         self.model.set("F2", "V2")
@@ -151,9 +155,11 @@ class TestThemeModel(unittest.TestCase):
             self.model.save()
         src_dir = os.path.join(self.test_dir, "src")
         os.makedirs(src_dir)
-        with open(os.path.join(src_dir, "asset.xpm"), "w") as f: f.write("/* XPM */")
+        with open(os.path.join(src_dir, "asset.xpm"), "w") as f:
+            f.write("/* XPM */")
         theme_file = os.path.join(src_dir, "default.theme")
-        with open(theme_file, "w") as f: f.write("ThemeDescription = \"Test\"")
+        with open(theme_file, "w") as f:
+            f.write("ThemeDescription = \"Test\"")
         self.model.load_file(theme_file)
         dst_dir = os.path.join(self.test_dir, "dst")
         dst_theme = os.path.join(dst_dir, "default.theme")
@@ -174,7 +180,9 @@ class TestThemeModel(unittest.TestCase):
 
     def test_model_callback_filter_tuple(self):
         called_count = 0
-        def cb(k): nonlocal called_count; called_count += 1
+        def cb(k):
+            nonlocal called_count
+            called_count += 1
         self.model.connect(cb, key_filter=("T1", "T2"))
         self.model.set("T1", "V")
         self.model.set("T2", "V2")

@@ -52,14 +52,15 @@ class TestAppBoost(unittest.TestCase):
         app = IceSculptApp()
         with patch('gi.repository.Gtk.Application.do_startup'), \
              patch('gi.repository.Gdk.Screen.get_default') as mock_screen:
-            mock_screen.return_value = None 
+            mock_screen.return_value = None
             app.do_startup()
             
         test_dir = tempfile.mkdtemp()
         try:
             mock_file = MagicMock()
             mock_file.get_path.return_value = os.path.join(test_dir, "test.theme")
-            with open(mock_file.get_path(), "w") as f: f.write("ThemeDescription = \"OpenTest\"")
+            with open(mock_file.get_path(), "w") as f:
+                f.write("ThemeDescription = \"OpenTest\"")
             
             app.do_activate()
             app.do_open([mock_file], 1, "")

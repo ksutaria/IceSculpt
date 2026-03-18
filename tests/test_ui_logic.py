@@ -108,7 +108,9 @@ class TestUIBoost(unittest.TestCase):
     def test_gradient_builder(self):
         from icesculpt.widgets.gradient_builder import GradientBuilder
         changed_val = None
-        def on_changed(v): nonlocal changed_val; changed_val = v
+        def on_changed(v):
+            nonlocal changed_val
+            changed_val = v
         gb = GradientBuilder("rgb:FF/00/00, invalid, #0000FF", on_changed)
         self.assertEqual(len(gb.colors), 2)
         gb._on_add_clicked(None)
