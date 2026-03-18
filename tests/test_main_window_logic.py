@@ -5,7 +5,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from icesculpt.app import IceSculptApp
+from icesculpt.app import ThemeStudioApp
 from icesculpt.main_window import MainWindow
 
 class TestMainWindowLogic(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestMainWindowLogic(unittest.TestCase):
         Gtk.init([])
 
     def setUp(self):
-        self.app = IceSculptApp()
+        self.app = ThemeStudioApp()
         self.win = MainWindow(self.app)
 
     def test_undo_redo_stack(self):
