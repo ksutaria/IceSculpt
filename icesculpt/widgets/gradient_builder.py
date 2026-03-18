@@ -90,7 +90,6 @@ class GradientBuilder(Gtk.Box):
         self._notify()
 
     def _notify(self):
-        icewm_colors = [color_utils.hex_to_icewm(c) for color in self.colors]
         # hex_to_icewm returns rgb:RR/GG/BB
         value = ",".join([color_utils.hex_to_icewm(c) for c in self.colors])
         self.on_changed(value)
