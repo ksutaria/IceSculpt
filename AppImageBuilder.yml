@@ -11,13 +11,12 @@ AppDir:
   apt:
     arch:
       - amd64
-      - arm64
     sources:
-      - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
+      - sourceline: deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy main restricted universe multiverse
         key_url: http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C
-      - sourceline: deb http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
+      - sourceline: deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ jammy-updates main restricted universe multiverse
         key_url: http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C
-      - sourceline: deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+      - sourceline: deb [arch=amd64] http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
         key_url: http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C
     include:
       - python3
@@ -39,6 +38,11 @@ AppImage:
 
 script:
   - export DESTDIR=$TARGET_APPDIR
+  - apt-get update || true
+  - apt-get install -y gnupg
+  - gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || true
+  - gpg --export 871920D1991BC93C | apt-key add - || true
+  - gpg --export 3B4FE6ACC0B21F32 | apt-key add - || true
   - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
   - cp -r icesculpt $DESTDIR/usr/lib/python3.10/site-packages/
   - mkdir -p $DESTDIR/usr/bin
