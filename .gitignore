@@ -33,3 +33,4 @@ Thumbs.db
 .coverage
 htmlcov/
 .env
+.ruff_cache
