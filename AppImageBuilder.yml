@@ -6,8 +6,8 @@ AppDir:
     name: IceSculpt
     icon: icesculpt
     version: 0.1.0
-    exec: usr/bin/icesculpt
-    exec_args: "$@"
+    exec: usr/bin/python3
+    exec_args: "$APPDIR/usr/bin/icesculpt $@"
   apt:
     arch:
       - amd64
@@ -21,18 +21,18 @@ AppDir:
       - gir1.2-gtk-3.0
       - libgirepository-1.0-1
       - libcairo2
-  python:
-    version: 3.10
-    scan_src:
-      - icesculpt
-    install:
-      - .
   runtime:
     env:
-      PATH: '${APPDIR}/usr/bin:${PATH}'
-      PYTHONPATH: '${APPDIR}/usr/lib/python3.10/site-packages:${PYTHONPATH}'
+      PYTHONHOME: '${APPDIR}/usr'
+      PYTHONPATH: '${APPDIR}/usr/lib/python3.10/site-packages'
 
 AppImage:
   arch: x86_64
   update-information: None
   sign-key: None
+
+script:
+  - export DESTDIR=$TARGET_APPDIR
+  - python3 -m pip install --ignore-installed --prefix=/usr --root=$DESTDIR .
+  - mkdir -p $TARGET_APPDIR/usr/bin
+  - cp icesculpt $TARGET_APPDIR/usr/bin/
