@@ -86,7 +86,7 @@ jobs:
         if: matrix.arch == 'aarch64'
         uses: docker/setup-qemu-action@v3
       - name: Build AppImage
-        uses: AppImageCommunity/appimage-builder-action@v1
+        uses: AppImageCrafters/build-appimage-action@v1
         with:
           recipe: AppImageBuilder.yml
           arch: ${{ matrix.arch }}
