@@ -37,7 +37,7 @@ Visual theme editor for the IceWM window manager.
 ### Prerequisites
 Ensure you have the required system libraries installed (Debian/Ubuntu example):
 ```bash
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 xvfb
 ```
 
 ### Development Setup

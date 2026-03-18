@@ -18,7 +18,7 @@ IceSculpt follows a reactive architecture where `ThemeModel` serves as the centr
 Before setting up the Python environment, ensure the following system libraries are installed (Debian/Ubuntu):
 ```bash
 sudo apt install libgirepository1.0-dev libcairo2-dev pkg-config \
-                 gir1.2-gtk-3.0 python3-gi python3-gi-cairo
+                 gir1.2-gtk-3.0 python3-gi python3-gi-cairo xvfb
 ```
 
 ### Python Environment

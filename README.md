@@ -29,9 +29,9 @@ Accurately preview how your theme will look in action, including the taskbar, st
 ## Installation
 
 ### Prerequisites
-IceSculpt requires GTK+ 3 and Cairo system libraries. On Debian/Ubuntu-based systems:
+IceSculpt requires GTK+ 3, Cairo, and Xvfb (for headless testing) system libraries. On Debian/Ubuntu-based systems:
 ```bash
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 \
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 xvfb \
                  libgirepository1.0-dev libcairo2-dev pkg-config
 ```
 
