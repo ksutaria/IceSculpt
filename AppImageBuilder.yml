@@ -33,6 +33,7 @@ AppImage:
 
 script:
   - export DESTDIR=$TARGET_APPDIR
+  - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
   - python3 -m pip install --ignore-installed --prefix=/usr --root=$DESTDIR .
   - mkdir -p $TARGET_APPDIR/usr/bin
   - cp icesculpt $TARGET_APPDIR/usr/bin/

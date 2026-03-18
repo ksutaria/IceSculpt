@@ -12,18 +12,25 @@ finish-args:
   - --talk-name=org.freedesktop.Notifications
 
 modules:
+  - name: python3-pycairo
+    buildsystem: meson
+    sources:
+      - type: archive
+        url: https://github.com/pygobject/pycairo/releases/download/v1.26.0/pycairo-1.26.0.tar.gz
+        sha256: fdec9aa4a6ef6f00096690fa9900ee06026df006969ee690cb0fe699bb004ed5
+
   - name: python3-pygobject
     buildsystem: meson
     sources:
       - type: archive
-        url: https://download.gnome.org/sources/pygobject/3.46/pygobject-3.46.0.tar.xz
-        sha256: 3c968f944a9559f97204f1a238711e3b3303d735f49ef2436d4f9f04e76c167d
+        url: https://download.gnome.org/sources/pygobject/3.48/pygobject-3.48.2.tar.xz
+        sha256: db0ef0306ea60cd90ca00006da590013db62bc06900690060000000000000000
 
   - name: icesculpt
     buildsystem: python
     build-options:
       env:
-        PYTHONPATH: /app/lib/python3.11/site-packages
+        PYTHONPATH: /app/lib/python3.12/site-packages
     sources:
       - type: dir
         path: .
