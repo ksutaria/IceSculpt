@@ -31,8 +31,8 @@ class TestPixmapCanvasLogic(unittest.TestCase):
         canvas.image = img
         canvas.set_draw_color('.')
         
-        # Simulate a pixel change
-        canvas._set_pixel_at(5, 5)
+        # Simulate a pixel change via public API
+        canvas.set_pixel_at(5, 5)
         self.assertEqual(img.get_pixel(5, 5), '.')
 
 if __name__ == "__main__":

@@ -71,6 +71,22 @@ class PixmapCanvas(Gtk.DrawingArea):
         """Set the character used when drawing pixels."""
         self._current_char = char
 
+    def set_pixel_at(self, x, y):
+        """Set pixel at (x, y) to current draw color programmatically."""
+        if not self._current_char:
+            return
+        if 0 <= x < self._image.width and 0 <= y < self._image.height:
+            # Save undo state
+            self._undo_stack.append(list(self._image.pixels))
+            if len(self._undo_stack) > self._max_undo:
+                self._undo_stack.pop(0)
+            self._redo_stack.clear()
+            
+            self._image.set_pixel(x, y, self._current_char)
+            self.queue_draw()
+            self.emit("pixel-changed", x, y)
+            self.emit("image-modified")
+
     def undo(self):
         if self._undo_stack:
             state = self._undo_stack.pop()
