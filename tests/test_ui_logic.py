@@ -94,5 +94,62 @@ class TestUILogic(unittest.TestCase):
         model.set("ThemeDescription", "CoverageTheme")
         win._on_model_changed("ThemeDescription")
         self.assertIn("CoverageTheme", win.get_title())
+
+
+class TestUIBoost(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        Gtk.init([])
+
+    def setUp(self):
+        self.model = ThemeModel()
+        self.model.new_theme()
+
+    def test_gradient_builder(self):
+        from icesculpt.widgets.gradient_builder import GradientBuilder
+        changed_val = None
+        def on_changed(v): nonlocal changed_val; changed_val = v
+        gb = GradientBuilder("rgb:FF/00/00, invalid, #0000FF", on_changed)
+        self.assertEqual(len(gb.colors), 2)
+        gb._on_add_clicked(None)
+        gb._on_move_clicked(None, 0, 1)
+        gb._on_delete_clicked(None, 1)
+        gb._notify()
+        self.assertIn("rgb:00/00/FF", changed_val)
+
+    def test_pixmap_canvas_undo_redo(self):
+        from icesculpt.widgets.pixmap_canvas import PixmapCanvas
+        from icesculpt import xpm_codec
+        img = xpm_codec.create_solid(2, 2, "#000000")
+        canvas = PixmapCanvas()
+        canvas.image = img
+        canvas.set_draw_color(".")
+        canvas.set_pixel_at(0, 0)
+        self.assertEqual(len(canvas._undo_stack), 1)
+        canvas.undo()
+        self.assertEqual(len(canvas._undo_stack), 0)
+        self.assertEqual(len(canvas._redo_stack), 1)
+        canvas.redo()
+        self.assertEqual(len(canvas._undo_stack), 1)
+        self.assertEqual(len(canvas._redo_stack), 0)
+
+    def test_preview_area_error_handling(self):
+        from unittest.mock import patch, MagicMock
+        pa = PreviewArea(self.model)
+        with patch.object(pa.renderer, 'render', side_effect=Exception("Render Fail")):
+            mock_cr = MagicMock()
+            pa._on_draw(pa.canvas, mock_cr)
+            mock_cr.fill.assert_called()
+
+    def test_color_editor_extra(self):
+        self.model.set_color_hex("ColorActiveTitleBar", "#FF0000")
+        editor = ColorEditor(self.model)
+        editor._on_make_gradient_clicked(None, "ColorActiveTitleBar")
+        self.assertIn(",", self.model.get("ColorActiveTitleBar"))
+        self.model.set_color_hex("ColorActiveBorder", "#00FF00")
+        swatch, label = editor._swatches["ColorActiveBorder"]
+        self.assertEqual(label.get_text(), "#00FF00")
+        self.model._fire_callbacks(None)
+        self.assertEqual(label.get_text(), "#00FF00")
 if __name__ == "__main__":
     unittest.main()

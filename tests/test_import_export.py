@@ -65,5 +65,20 @@ class TestImportExport(unittest.TestCase):
         finally:
             shutil.rmtree(empty_dir)
 
+
+class TestImportExportBoost(unittest.TestCase):
+    def test_export_failure(self):
+        from icesculpt.theme_model import ThemeModel
+        model = ThemeModel() # No theme dir
+        self.assertFalse(_do_export(None, model, "out.tar.gz"))
+
+    def test_show_error_fallback(self):
+        from unittest.mock import patch
+        from io import StringIO
+        from icesculpt.dialogs.import_export import _show_error
+        with patch('sys.stdout', new=StringIO()) as fake_out:
+            _show_error(None, "ErrorMessage")
+            self.assertIn("ErrorMessage", fake_out.getvalue())
+
 if __name__ == "__main__":
     unittest.main()

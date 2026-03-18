@@ -118,5 +118,25 @@ class TestColorOps(unittest.TestCase):
         self.assertEqual(blend("#FF0000", "#0000FF", 1.0), "#0000FF")
 
 
+class TestColorUtilsBoost(unittest.TestCase):
+    def test_hls(self):
+        from icesculpt.color_utils import get_hls, hls_to_hex
+        h, l, s = get_hls("#FF0000")
+        self.assertAlmostEqual(h, 0.0)
+        self.assertEqual(hls_to_hex(h, l, s), "#FF0000")
+
+    def test_contrast_luminance(self):
+        from icesculpt.color_utils import get_luminance, get_contrast_ratio
+        self.assertAlmostEqual(get_luminance("#FFFFFF"), 1.0)
+        self.assertAlmostEqual(get_luminance("#000000"), 0.0)
+        self.assertTrue(get_contrast_ratio("#FFFFFF", "#000000") > 20)
+
+    def test_invalid_rgba(self):
+        # Too short
+        self.assertEqual(hex_to_rgba("#123"), (0.5, 0.5, 0.5, 1.0))
+        # None
+        self.assertEqual(hex_to_rgba(None), (0.5, 0.5, 0.5, 1.0))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -54,9 +54,8 @@ class PreviewArea(Gtk.Box):
         self._redraw_pending = False
 
     def _on_mode_toggled(self, btn, state):
-        if btn.get_active():
-            self.renderer.force_active = state
-            self.canvas.queue_draw()
+        self.renderer.force_active = state
+        self.canvas.queue_draw()
 
     def _on_draw(self, widget, cr):
         w = self.canvas.get_allocated_width()

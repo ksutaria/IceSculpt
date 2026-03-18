@@ -44,11 +44,11 @@ class ThemeLine:
         """Check if a value needs quoting (contains spaces, commas, or special chars)."""
         if not value:
             return False
+        if '"' in value:
+            return False  # Already has quotes internally, don't double-quote
         # Quote if value contains spaces (unless it looks like a file path or color)
         if " " in value and not value.startswith("rgb:") and not value.startswith("/"):
             return True
-        if '"' in value:
-            return False  # Already has quotes internally, don't double-quote
         return False
 
 

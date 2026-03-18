@@ -136,3 +136,56 @@ class TestFileIO(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestLinterBoost(unittest.TestCase):
+    def test_linter_boost(self):
+        from icesculpt.theme_model import ThemeModel
+        from icesculpt.linter import lint_theme, LintMessage
+        model = ThemeModel()
+        with tempfile.TemporaryDirectory() as d:
+            model.theme_dir = d
+            model.set("TitleBarPixmap", "missing.xpm")
+            model.set("ColorActiveTitleBar", "#000000")
+            model.set("ColorActiveTitleBarText", "#111111")
+            
+            messages = lint_theme(model)
+            msg_str = [str(m) for m in messages]
+            
+            self.assertTrue(any("Referenced pixmap not found" in s for s in msg_str))
+            self.assertTrue(any("Low contrast ratio" in s for s in msg_str))
+            
+            lm = LintMessage("K", "M", "error")
+            self.assertEqual(str(lm), "[ERROR] K: M")
+
+
+class TestParserBoost(unittest.TestCase):
+    def test_parser_unparseable(self):
+        content = "This is not a key value pair"
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".theme", delete=False) as f:
+            f.write(content)
+            path = f.name
+        try:
+            lines = parse_theme_file(path)
+            self.assertEqual(len(lines), 1)
+            self.assertEqual(lines[0].raw, content)
+        finally:
+            os.unlink(path)
+            
+    def test_theme_line_to_string(self):
+        from icesculpt.theme_parser import ThemeLine
+        tl_blank = ThemeLine("", blank=True)
+        self.assertEqual(tl_blank.to_string(), "")
+        tl_comment = ThemeLine("# Comment", comment_only=True)
+        self.assertEqual(tl_comment.to_string(), "# Comment")
+        tl_quoted = ThemeLine("", key="Key", value="Value with space")
+        self.assertEqual(tl_quoted.to_string(), 'Key="Value with space"')
+
+    def test_theme_line_quoting(self):
+        from icesculpt.theme_parser import ThemeLine
+        # Test _needs_quoting logic
+        self.assertFalse(ThemeLine._needs_quoting(""))
+        self.assertTrue(ThemeLine._needs_quoting("With Space"))
+        self.assertFalse(ThemeLine._needs_quoting("rgb:1/2/3 with space"))
+        self.assertFalse(ThemeLine._needs_quoting("/path/to file"))
+        self.assertFalse(ThemeLine._needs_quoting('Already "quoted"'))

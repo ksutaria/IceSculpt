@@ -50,5 +50,35 @@ class TestEditors(unittest.TestCase):
         for _ in range(10):
             GLib.main_context_default().iteration(False)
 
+
+class TestEditorsBoost(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        Gtk.init([])
+
+    def setUp(self):
+        self.model = ThemeModel()
+        self.model.new_theme()
+
+    def test_new_theme_dialog_properties(self):
+        from icesculpt.dialogs.new_theme import NewThemeDialog
+        dialog = NewThemeDialog()
+        dialog._name_entry.set_text("CustomName")
+        dialog._author_entry.set_text("CustomAuthor")
+        self.assertEqual(dialog.theme_name, "CustomName")
+        self.assertEqual(dialog.author, "CustomAuthor")
+        self.assertEqual(dialog.look_style, "flat")
+        dialog.destroy()
+
+    def test_metadata_editor_extra(self):
+        self.model.set("ThemeDescription", "Old")
+        editor = MetadataEditor(self.model)
+        editor._entries["ThemeAuthor"].set_text("NewAuthor")
+        self.assertEqual(self.model.get("ThemeAuthor"), "NewAuthor")
+        self.model.set("ThemeDescription", "NewDescription")
+        self.assertEqual(editor._entries["ThemeDescription"].get_text(), "NewDescription")
+        self.model.batch_update({"License": "GPL"})
+        self.assertEqual(editor._entries["License"].get_text(), "GPL")
+
 if __name__ == "__main__":
     unittest.main()

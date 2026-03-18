@@ -145,5 +145,49 @@ class TestSerialization(unittest.TestCase):
             os.unlink(tmppath)
 
 
+class TestXpmCodecBoost(unittest.TestCase):
+    def test_xpm_codec_errors(self):
+        from icesculpt import xpm_codec
+        with self.assertRaises(ValueError):
+            xpm_codec.parse_xpm("no strings here")
+        with self.assertRaises(ValueError):
+            xpm_codec.parse_xpm('"10 10 1 1"') 
+        with self.assertRaises(ValueError):
+            xpm_codec.parse_xpm('"1 1 2 1", "char c #000000"') 
+        with self.assertRaises(ValueError):
+            xpm_codec.parse_xpm('"1 1 1 1", "char c #000000"') 
+
+    def test_xpm_gradients_large(self):
+        from icesculpt import xpm_codec
+        # Wide gradient (cpp=2)
+        grad_h = xpm_codec.create_gradient_h(100, 10, "#000000", "#FFFFFF")
+        self.assertEqual(grad_h.cpp, 2)
+        grad_v = xpm_codec.create_gradient_v(10, 100, "#000000", "#FFFFFF")
+        self.assertEqual(grad_v.cpp, 2)
+
+    def test_xpm_image_methods_extra(self):
+        from icesculpt import xpm_codec
+        img = xpm_codec.XpmImage(2, 2)
+        img.set_pixel(0, 0, img.get_pixel(1, 1))
+        self.assertEqual(img.get_color_at(0, 0), "#C0C0C0")
+        self.assertIsNone(img.get_pixel(5, 5))
+        self.assertIsNone(img.get_color_at(5, 5))
+        
+        img.colors["."] = "#FF0000"
+        img.pixels = ["..", ".."]
+        img.recolor(hue_shift=0.5)
+        self.assertNotEqual(img.get_color_at(0, 0), "#FF0000")
+
+    def test_xpm_write_name_sanitization(self):
+        from icesculpt import xpm_codec
+        img = xpm_codec.create_solid(1, 1, "#000000")
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "bad-name.xpm")
+            xpm_codec.write_xpm_file(path, img)
+            with open(path, "r") as f:
+                content = f.read()
+                self.assertIn("static char *bad_name[]", content)
+
+
 if __name__ == "__main__":
     unittest.main()

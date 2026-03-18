@@ -61,9 +61,11 @@ class MetadataEditor(Gtk.Box):
         self.model.set(key, entry.get_text())
 
     def _on_model_changed(self, key):
-        if key is None:
-            # Full reload
+        if key is None or key in self._entries:
+            # Full reload or specific key change
             for k, entry in self._entries.items():
+                if key is not None and k != key:
+                    continue
                 val = self.model.get(k, "")
                 if entry.get_text() != val:
                     entry.set_text(val)
