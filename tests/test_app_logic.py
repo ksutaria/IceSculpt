@@ -3,7 +3,7 @@
 import unittest
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gio
+from gi.repository import Gtk
 
 from icesculpt.app import IceSculptApp
 from icesculpt.dialogs.new_theme import NewThemeDialog
