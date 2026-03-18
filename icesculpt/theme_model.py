@@ -352,7 +352,7 @@ class ThemeModel:
             for k in keys_to_remove:
                 del self.values[k]
                 theme_parser.remove_key(self.lines, k)
-            
+
             # Set all keys from the snapshot
             for key, value in snapshot.items():
                 self.values[key] = value

@@ -28,7 +28,7 @@ class TestLinter(unittest.TestCase):
         messages = lint_theme(self.model)
         errors = [m for m in messages if m.key == "ColorActiveTitleBar" and m.severity == "error"]
         self.assertEqual(len(errors), 0)
-        
+
         # Invalid part in gradient
         self.model.set("ColorActiveTitleBar", "rgb:00/00/00,invalid")
         messages = lint_theme(self.model)
@@ -48,7 +48,7 @@ class TestLinter(unittest.TestCase):
         messages = lint_theme(self.model)
         warnings = [m for m in messages if "contrast" in m.message.lower()]
         self.assertGreater(len(warnings), 0)
-        
+
         # High contrast: white on black
         self.model.set("ColorActiveTitleBar", "rgb:00/00/00")
         self.model.set("ColorActiveTitleBarText", "rgb:FF/FF/FF")

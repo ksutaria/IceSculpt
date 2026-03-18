@@ -3,7 +3,7 @@
 import unittest
 from icesculpt.theme_model import ThemeModel
 from icesculpt.pixmap_generator import (
-    generate_button, generate_frame_piece, 
+    generate_button, generate_frame_piece,
     generate_all_buttons, generate_all_frames
 )
 
@@ -30,7 +30,7 @@ class TestPixmapExtra(unittest.TestCase):
         btns = generate_all_buttons(16, self.model)
         self.assertGreater(len(btns), 10)
         self.assertIn("closeA.xpm", btns)
-        
+
         # Frames
         frames = generate_all_frames(6, 6, 24, 24, self.model)
         self.assertGreater(len(frames), 5)

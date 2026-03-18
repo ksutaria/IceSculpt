@@ -120,20 +120,20 @@ class XpmImage:
             if color_str is None or color_str.lower() == "none":
                 new_colors[char] = color_str
                 continue
-            
+
             # Convert to HLS
             r, g, b, _ = hex_to_rgba(color_str)
             h, lum, s = colorsys.rgb_to_hls(r, g, b)
-            
+
             # Apply shifts
             h = (h + hue_shift) % 1.0
             s = max(0.0, min(1.0, s * saturation_factor))
             lum = max(0.0, min(1.0, lum * luminance_factor))
-            
+
             # Back to hex
             nr, ng, nb = colorsys.hls_to_rgb(h, lum, s)
             new_colors[char] = rgba_to_hex(nr, ng, nb)
-        
+
         self.colors = new_colors
 
 

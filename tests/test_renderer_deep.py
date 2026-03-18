@@ -16,7 +16,7 @@ class TestRendererDeep(unittest.TestCase):
     def test_render_all_components(self):
         # Full desktop render
         self.renderer.render(self.cr, 800, 600)
-        
+
         # Specific sub-components
         self.renderer.render_menu_preview(self.cr, 0, 0, 200)
         self.renderer.render_tooltip_preview(self.cr, 0, 0)

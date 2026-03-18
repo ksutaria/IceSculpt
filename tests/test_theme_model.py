@@ -32,7 +32,7 @@ class TestThemeModel(unittest.TestCase):
         self.model.new_theme("SaveTest", "Tester")
         self.model.set("ColorActiveTitleBar", "rgb:11/22/33")
         self.model.save(theme_path)
-        
+
         new_model = ThemeModel()
         new_model.load_file(theme_path)
         self.assertEqual(new_model.get("ThemeDescription"), "SaveTest")
@@ -55,7 +55,7 @@ class TestThemeModel(unittest.TestCase):
         changes = []
         def on_change(key):
             changes.append(key)
-        
+
         self.model.connect(on_change)
         self.model.set("TestKey", "Val")
         self.assertIn("TestKey", changes)

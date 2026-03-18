@@ -2,7 +2,6 @@
 
 import unittest
 from icesculpt.theme_model import ThemeModel
-from icesculpt.widgets.param_row import ParamRow
 from icesculpt.widgets.gradient_builder import GradientBuilder
 from icesculpt.widgets.color_swatch import ColorSwatch
 import gi
@@ -21,21 +20,21 @@ class TestWidgetsLogic(unittest.TestCase):
     def test_gradient_builder_logic(self):
         def on_changed(val):
             self.last_val = val
-        
+
         self.last_val = None
         builder = GradientBuilder("rgb:00/00/00,rgb:FF/FF/FF", on_changed)
         self.assertEqual(len(builder.colors), 2)
-        
+
         # Add color
         builder._on_add_clicked(None)
         self.assertEqual(len(builder.colors), 3)
         self.assertIn("rgb:80/80/80", self.last_val)
-        
+
         # Move color
         first_color = builder.colors[0]
         builder._on_move_clicked(None, 0, 1)
         self.assertEqual(builder.colors[1], first_color)
-        
+
         # Delete color
         builder._on_delete_clicked(None, 0)
         self.assertEqual(len(builder.colors), 2)
@@ -43,7 +42,7 @@ class TestWidgetsLogic(unittest.TestCase):
     def test_color_swatch_logic(self):
         swatch = ColorSwatch("#FF0000")
         self.assertEqual(swatch.hex_color, "#FF0000")
-        
+
         swatch.hex_color = "#00FF00"
         self.assertEqual(swatch.hex_color, "#00FF00")
 

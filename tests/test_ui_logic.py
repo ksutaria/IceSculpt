@@ -6,7 +6,7 @@ import tempfile
 import shutil
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib
+from gi.repository import Gtk, GLib
 
 from icesculpt.theme_model import ThemeModel
 from icesculpt.preview_renderer import PreviewRenderer
@@ -47,7 +47,7 @@ class TestUILogic(unittest.TestCase):
         # Run main loop briefly to process idle tasks
         while GLib.main_context_default().iteration(False):
             pass
-        
+
         # Test mode toggles
         area.btn_active.set_active(True)
         self.assertEqual(area.renderer.force_active, True)
@@ -67,28 +67,28 @@ class TestUILogic(unittest.TestCase):
         test_dir = tempfile.mkdtemp()
         self.model.theme_dir = test_dir
         editor = PixmapEditor(self.model)
-        
+
         # Test generate buttons (exercises pixmap_generator + editor logic)
         editor._on_generate_buttons(None)
         self.assertTrue(os.path.exists(os.path.join(test_dir, "closeA.xpm")))
-        
+
         # Test refresh
         editor._on_refresh(None)
         self.assertGreater(len(editor._store), 0)
-        
+
         shutil.rmtree(test_dir)
 
     def test_main_window_ops(self):
         app = IceSculptApp()
         win = MainWindow(app)
-        
+
         # Test toggle preview
         active = win._toggle_preview_item.get_active()
         win._on_toggle_preview(win._toggle_preview_item)
-        
+
         # Test status
         win._status("Testing coverage")
-        
+
         # Test title update
         self.model.set("ThemeDescription", "CoverageTheme")
         win._on_model_changed("ThemeDescription")

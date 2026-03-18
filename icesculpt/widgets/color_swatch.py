@@ -75,7 +75,7 @@ class ColorSwatch(Gtk.DrawingArea):
         else:
             r, g, b, _ = hex_to_rgba(self._hex)
             cr.set_source_rgb(r, g, b)
-        
+
         cr.rectangle(0, 0, w, h)
         cr.fill()
 
@@ -109,7 +109,7 @@ class ColorSwatch(Gtk.DrawingArea):
             from .gradient_builder import GradientBuilder
             dialog = Gtk.Dialog(title="Edit Gradient", transient_for=parent)
             dialog.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
-            
+
             def on_grad_changed(new_val):
                 self._hex = new_val
                 self.queue_draw()

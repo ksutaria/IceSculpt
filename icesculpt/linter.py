@@ -1,7 +1,6 @@
 """Theme linter and health check rules for IceWM themes."""
 
 import os
-import re
 from . import color_utils
 
 class LintMessage:
@@ -21,7 +20,7 @@ def lint_theme(model):
         List of LintMessage objects.
     """
     messages = []
-    
+
     # 1. Check required metadata
     required_metadata = ["ThemeDescription", "ThemeAuthor"]
     for key in required_metadata:
@@ -70,8 +69,8 @@ def lint_theme(model):
     fg = model.get_color_hex("ColorActiveTitleBarText", "#ECEFF4")
     ratio = color_utils.get_contrast_ratio(bg, fg)
     if ratio < 4.5:
-        messages.append(LintMessage("ColorActiveTitleBarText", 
-                                    f"Low contrast ratio ({ratio:.2f}:1) against title bar background. WCAG recommends 4.5:1.", 
+        messages.append(LintMessage("ColorActiveTitleBarText",
+                                    f"Low contrast ratio ({ratio:.2f}:1) against title bar background. WCAG recommends 4.5:1.",
                                     "warning"))
 
     return messages

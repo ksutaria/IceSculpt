@@ -6,7 +6,6 @@ from gi.repository import Gtk
 
 from ..widgets.color_swatch import ColorSwatch
 from ..widgets.param_row import create_bool_row
-from ..color_utils import hex_to_icewm
 
 
 class DesktopEditor(Gtk.ScrolledWindow):

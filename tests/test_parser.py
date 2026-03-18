@@ -10,7 +10,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from icesculpt.theme_parser import (
     parse_theme_file, parse_theme_file_from_string, extract_values,
     update_value, remove_key, write_theme_file, create_empty_theme,
-    ThemeLine,
 )
 
 

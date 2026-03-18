@@ -13,11 +13,11 @@ class TestImportExport(unittest.TestCase):
         self.model = ThemeModel()
         self.test_dir = tempfile.mkdtemp()
         self.theme_dir = tempfile.mkdtemp()
-        
+
         # Create a basic theme structure
         with open(os.path.join(self.theme_dir, "default.theme"), "w") as f:
             f.write("ThemeDescription=\"Test\"\n")
-        
+
         self.model.load_file(os.path.join(self.theme_dir, "default.theme"))
 
     def tearDown(self):
@@ -31,7 +31,7 @@ class TestImportExport(unittest.TestCase):
         success = _do_export(None, self.model, archive_path)
         self.assertTrue(success)
         self.assertTrue(os.path.exists(archive_path))
-        
+
         # Verify content
         with tarfile.open(archive_path, "r:gz") as tar:
             names = tar.getnames()
@@ -42,19 +42,19 @@ class TestImportExport(unittest.TestCase):
         archive_path = os.path.join(self.test_dir, "import.tar.gz")
         with tarfile.open(archive_path, "w:gz") as tar:
             tar.add(self.theme_dir, arcname="mytheme")
-            
+
         # 2. Import it
         success = _do_import(None, self.model, archive_path)
         self.assertTrue(success)
         self.assertEqual(self.model.get("ThemeDescription"), "Test")
-        
+
     def test_do_import_invalid(self):
         # No default.theme
         empty_dir = tempfile.mkdtemp()
         archive_path = os.path.join(self.test_dir, "invalid.tar.gz")
         with tarfile.open(archive_path, "w:gz") as tar:
             tar.add(empty_dir, arcname="nothing")
-        
+
         # This should fail and return False
         # We wrap in try/except because it might try to show a Gtk error dialog
         try:

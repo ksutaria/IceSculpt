@@ -46,7 +46,7 @@ class PreviewRenderer:
             y = desktop_h * 0.15 if self.force_active is None else desktop_h * 0.15
             w = width * 0.6 if self.force_active is None else width * 0.6
             h = desktop_h * 0.65 if self.force_active is None else desktop_h * 0.65
-            
+
             self._draw_window(cr, active=True,
                               x=x, y=y, w=w, h=h,
                               title="Active Window")

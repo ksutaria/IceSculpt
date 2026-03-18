@@ -13,13 +13,13 @@ class TestPixmapAugmented(unittest.TestCase):
         img = XpmImage(width=2, height=2)
         img.colors['.'] = "#FF0000" # Red
         img.pixels = ["..", ".."]
-        
+
         # Shift hue by 0.5 (should turn red to cyan-ish)
         img.recolor(hue_shift=0.5)
-        
+
         new_color = img.colors['.']
         self.assertNotEqual(new_color, "#FF0000")
-        
+
     def test_recolor_all_pixmaps(self):
         test_dir = tempfile.mkdtemp()
         try:
@@ -30,11 +30,11 @@ class TestPixmapAugmented(unittest.TestCase):
             img.pixels = ["."]
             with open(xpm_path, "w") as f:
                 f.write(img.to_xpm3())
-            
+
             # Recolor
             recolored = recolor_all_pixmaps(test_dir, hue_shift=0.1)
             self.assertIn("test.xpm", recolored)
-            
+
             # Verify file was written
             with open(xpm_path, "r") as f:
                 content = f.read()

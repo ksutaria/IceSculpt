@@ -8,7 +8,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from icesculpt.xpm_codec import (
-    XpmImage, parse_xpm, create_solid, create_gradient_h, create_gradient_v,
+    parse_xpm, create_solid, create_gradient_h, create_gradient_v,
     write_xpm_file, read_xpm_file,
 )
 

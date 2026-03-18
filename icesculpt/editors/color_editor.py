@@ -5,7 +5,6 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from ..widgets.color_swatch import ColorSwatch
-from ..color_utils import hex_to_icewm
 
 
 # Color keys organized by category
@@ -166,7 +165,7 @@ class ColorEditor(Gtk.ScrolledWindow):
                 val = model.get(key)
                 hex_color = model.get_color_hex(key, "#808080")
                 display_val = val if ',' in val else hex_color
-                
+
                 swatch = ColorSwatch(display_val, size=28)
                 swatch.connect("color-changed", self._on_swatch_changed, key)
                 grid.attach(swatch, 1, row_idx, 1, 1)
@@ -178,7 +177,7 @@ class ColorEditor(Gtk.ScrolledWindow):
                 hex_label.set_width_chars(8)
                 hex_label.get_style_context().add_class("monospace")
                 grid.attach(hex_label, 2, row_idx, 1, 1)
-                
+
                 # Make Gradient button
                 grad_btn = Gtk.Button.new_from_icon_name("list-add-symbolic", Gtk.IconSize.BUTTON)
                 grad_btn.set_tooltip_text("Convert to Gradient")
@@ -201,7 +200,7 @@ class ColorEditor(Gtk.ScrolledWindow):
             self.model.set(key, hex_color)
         else:
             self.model.set_color_hex(key, hex_color)
-        
+
         # Update hex label
         if key in self._swatches:
             _, hex_label = self._swatches[key]

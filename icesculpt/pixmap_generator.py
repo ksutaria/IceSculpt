@@ -323,5 +323,5 @@ def recolor_all_pixmaps(theme_dir, hue_shift=0.0, saturation_factor=1.0, luminan
             except Exception:
                 # Skip files that can't be parsed
                 continue
-    
+
     return recolored

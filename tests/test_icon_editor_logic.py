@@ -20,18 +20,18 @@ class TestIconEditorLogic(unittest.TestCase):
     def setUp(self):
         self.model = ThemeModel()
         self.test_dir = tempfile.mkdtemp()
-        
+
         # Create icons directory structure
         self.icons_dir = os.path.join(self.test_dir, "icons")
         os.makedirs(os.path.join(self.icons_dir, "48x48"), exist_ok=True)
-        
+
         # Create a dummy icon
         img = XpmImage(width=16, height=16)
         img.colors['.'] = "#000000"
         img.pixels = ["." * 16] * 16
         with open(os.path.join(self.icons_dir, "48x48", "test.xpm"), "w") as f:
             f.write(img.to_xpm3())
-            
+
         # Point model to this dir
         self.model.theme_dir = self.test_dir
 
@@ -45,7 +45,7 @@ class TestIconEditorLogic(unittest.TestCase):
         # It might take a bit for GdkPixbuf to load if we were in a loop
         # but here we just check if it executed without error and added something
         self.assertGreaterEqual(len(children), 0)
-        
+
         # Manually trigger
         editor._load_icons()
         self.assertGreaterEqual(len(editor._flowbox.get_children()), 0)

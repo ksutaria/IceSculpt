@@ -206,27 +206,27 @@ class MainWindow(Gtk.ApplicationWindow):
         # Tools menu
         tools_item = Gtk.MenuItem.new_with_mnemonic("_Tools")
         tools_menu = Gtk.Menu()
-        
+
         health_item = Gtk.MenuItem.new_with_mnemonic("Check Theme _Health")
         health_item.connect("activate", self._on_check_health)
         tools_menu.append(health_item)
-        
+
         tools_menu.append(Gtk.SeparatorMenuItem())
-        
+
         acc_item = Gtk.MenuItem.new_with_mnemonic("_Accessibility")
         acc_menu = Gtk.Menu()
-        
+
         large_font_item = Gtk.MenuItem.new_with_mnemonic("_Large Fonts")
         large_font_item.connect("activate", self._on_apply_large_fonts)
         acc_menu.append(large_font_item)
-        
+
         high_contrast_item = Gtk.MenuItem.new_with_mnemonic("_High Contrast")
         high_contrast_item.connect("activate", self._on_apply_high_contrast)
         acc_menu.append(high_contrast_item)
-        
+
         acc_item.set_submenu(acc_menu)
         tools_menu.append(acc_item)
-        
+
         tools_item.set_submenu(tools_menu)
         menubar.append(tools_item)
 
@@ -348,17 +348,17 @@ class MainWindow(Gtk.ApplicationWindow):
     def _on_check_health(self, widget):
         from .linter import lint_theme
         messages = lint_theme(self.model)
-        
+
         dialog = Gtk.Dialog(title="Theme Health Check", parent=self, flags=0)
         dialog.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
         dialog.set_default_size(500, 400)
-        
+
         vbox = dialog.get_content_area()
         vbox.set_spacing(10)
         vbox.set_margin_start(10)
         vbox.set_margin_end(10)
         vbox.set_margin_top(10)
-        
+
         if not messages:
             lbl = Gtk.Label(label="No issues found! Your theme looks healthy.")
             vbox.pack_start(lbl, True, True, 0)
@@ -366,32 +366,32 @@ class MainWindow(Gtk.ApplicationWindow):
             sw = Gtk.ScrolledWindow()
             sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
             vbox.pack_start(sw, True, True, 0)
-            
+
             listbox = Gtk.ListBox()
             listbox.set_selection_mode(Gtk.SelectionMode.NONE)
             sw.add(listbox)
-            
+
             for msg in messages:
                 row = Gtk.ListBoxRow()
                 hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
                 row.add(hbox)
-                
+
                 icon_name = "dialog-warning-symbolic"
                 if msg.severity == "error":
                     icon_name = "dialog-error-symbolic"
                 elif msg.severity == "info":
                     icon_name = "dialog-information-symbolic"
-                
+
                 img = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
                 hbox.pack_start(img, False, False, 0)
-                
+
                 lbl = Gtk.Label(label=f"<b>{msg.key}</b>: {msg.message}", xalign=0)
                 lbl.set_use_markup(True)
                 lbl.set_line_wrap(True)
                 hbox.pack_start(lbl, True, True, 0)
-                
+
                 listbox.add(row)
-        
+
         dialog.show_all()
         dialog.run()
         dialog.destroy()

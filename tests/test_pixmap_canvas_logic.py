@@ -16,9 +16,9 @@ class TestPixmapCanvasLogic(unittest.TestCase):
         img = XpmImage(width=10, height=10)
         canvas = PixmapCanvas(zoom=10)
         canvas.image = img
-        
+
         self.assertEqual(canvas.zoom, 10)
-        
+
         # Test color selection
         img.colors['A'] = "#FF0000"
         canvas.set_draw_color('A')
@@ -29,15 +29,15 @@ class TestPixmapCanvasLogic(unittest.TestCase):
         canvas = PixmapCanvas(zoom=10)
         canvas.image = img
         canvas.set_draw_color('X')
-        
+
         # 1. Initial change
         canvas.set_pixel_at(0, 0)
         self.assertEqual(img.get_pixel(0, 0), 'X')
-        
+
         # 2. Undo
         self.assertTrue(canvas.undo())
         self.assertEqual(img.get_pixel(0, 0), ' ') # Default
-        
+
         # 3. Redo
         self.assertTrue(canvas.redo())
         self.assertEqual(img.get_pixel(0, 0), 'X')
@@ -48,7 +48,7 @@ class TestPixmapCanvasLogic(unittest.TestCase):
         canvas = PixmapCanvas(zoom=10)
         canvas.image = img
         canvas.set_draw_color('.')
-        
+
         # Simulate a pixel change via public API
         canvas.set_pixel_at(5, 5)
         self.assertEqual(img.get_pixel(5, 5), '.')

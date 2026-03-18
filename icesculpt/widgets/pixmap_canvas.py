@@ -81,7 +81,7 @@ class PixmapCanvas(Gtk.DrawingArea):
             if len(self._undo_stack) > self._max_undo:
                 self._undo_stack.pop(0)
             self._redo_stack.clear()
-            
+
             self._image.set_pixel(x, y, self._current_char)
             self.queue_draw()
             self.emit("pixel-changed", x, y)

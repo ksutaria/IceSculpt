@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from icesculpt.color_utils import (
     icewm_to_hex, hex_to_icewm, hex_to_rgba, rgba_to_hex,
-    icewm_to_rgba, rgba_to_icewm, darken, lighten, blend,
+    darken, lighten, blend,
 )
 
 

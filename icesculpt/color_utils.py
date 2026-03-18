@@ -292,16 +292,16 @@ def get_luminance(hex_color):
     Formula based on W3C relative luminance definition.
     """
     r, g, b, _ = hex_to_rgba(hex_color)
-    
+
     def adjust(c):
         if c <= 0.03928:
             return c / 12.92
         return ((c + 0.055) / 1.055) ** 2.4
-    
+
     r = adjust(r)
     g = adjust(g)
     b = adjust(b)
-    
+
     return 0.2126 * r + 0.7152 * g + 0.0722 * b
 
 
@@ -309,10 +309,10 @@ def get_contrast_ratio(hex1, hex2):
     """Calculate the contrast ratio between two colors (1.0 to 21.0)."""
     l1 = get_luminance(hex1)
     l2 = get_luminance(hex2)
-    
+
     if l1 < l2:
         l1, l2 = l2, l1
-        
+
     return (l1 + 0.05) / (l2 + 0.05)
 
 
