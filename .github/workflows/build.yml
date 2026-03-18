@@ -95,27 +95,60 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: [x86_64, aarch64]
+        arch: [x86_64]
     steps:
       - uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build AppImage
-        uses: docker://appimagecrafters/appimage-builder:latest
-        with:
-          entrypoint: /bin/bash
-          args: -c "appimage-builder --recipe AppImageBuilder.yml --skip-test"
-      - name: Rename and Verify AppImage
+      - name: Install Dependencies
         run: |
-          for f in *.AppImage; do
-            mv "$f" "${f%.AppImage}.appimage"
-          done
-          ls -l *.appimage
+          sudo apt-get update
+          sudo apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0 wget libfuse2
+      - name: Setup AppDir
+        run: |
+          mkdir -p AppDir/usr/bin
+          mkdir -p AppDir/usr/lib/python3.10/site-packages
+          
+          # Install project into AppDir
+          pip install . -t AppDir/usr/lib/python3.10/site-packages
+          
+          cp icesculpt/icesculpt-launcher AppDir/usr/bin/icesculpt
+          chmod +x AppDir/usr/bin/icesculpt
+          
+          # Icons and Desktop file
+          mkdir -p AppDir/usr/share/icons/hicolor/scalable/apps
+          cp icesculpt/data/icons/icesculpt.svg AppDir/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
+          mkdir -p AppDir/usr/share/applications
+          cat > AppDir/usr/share/applications/org.icesculpt.IceSculpt.desktop <<EOF
+          [Desktop Entry]
+          Type=Application
+          Name=IceSculpt
+          Exec=icesculpt
+          Icon=icesculpt
+          Categories=Utility;Settings;
+          EOF
+          
+          # AppRun script
+          cat > AppDir/AppRun <<EOF
+          #!/bin/sh
+          HERE="\$(dirname "\$(readlink -f "\${0}")")"
+          export PYTHONPATH="\${HERE}/usr/lib/python3.10/site-packages:\${PYTHONPATH}"
+          exec "\${HERE}/usr/bin/icesculpt" "\$@"
+          EOF
+          chmod +x AppDir/AppRun
+          
+          # Link icon to root for appimagetool
+          ln -s usr/share/icons/hicolor/scalable/apps/icesculpt.svg AppDir/icesculpt.svg
+          ln -s usr/share/applications/org.icesculpt.IceSculpt.desktop AppDir/icesculpt.desktop
+      - name: Generate AppImage
+        run: |
+          wget https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+          chmod +x appimagetool-x86_64.AppImage
+          export ARCH=x86_64
+          ./appimagetool-x86_64.AppImage AppDir icesculpt-0.1.0-x86_64.appimage
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: IceSculpt-${{ matrix.arch }}.appimage
-          path: ./*.appimage
+          name: IceSculpt-x86_64.appimage
+          path: icesculpt-0.1.0-x86_64.appimage
 
   # 3. Build Flatpak (Sandboxed)
   build-flatpak:
