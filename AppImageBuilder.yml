@@ -35,7 +35,6 @@ AppImage:
   arch: x86_64
   update-information: None
   sign-key: None
-  zsync: None
 
 script:
   - export DESTDIR=$TARGET_APPDIR
@@ -51,3 +50,4 @@ script:
   - chmod +x $DESTDIR/usr/bin/icesculpt
   - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
   - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
+  - rm -f *.zsync
