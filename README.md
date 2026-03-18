@@ -1,4 +1,4 @@
-# IceSculpt
+# <img src="icesculpt/data/icons/icesculpt.svg" alt="IceSculpt Logo" width="32" height="32" /> IceSculpt
 
 [![Build and Package](https://github.com/ksutaria/IceSculpt/actions/workflows/build.yml/badge.svg)](https://github.com/ksutaria/IceSculpt/actions)
 [![codecov](https://codecov.io/gh/ksutaria/IceSculpt/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ksutaria/IceSculpt)
