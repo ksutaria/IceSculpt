@@ -19,9 +19,10 @@ IceSculpt is a visual theme editor for the [IceWM](https://ice-wm.org/) window m
 ## Installation
 
 ### Prerequisites
-Ensure you have the required system libraries installed. On Debian/Ubuntu-based systems:
+IceSculpt requires GTK+ 3 and Cairo system libraries. On Debian/Ubuntu-based systems:
 ```bash
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
+sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0 \
+                 libgirepository1.0-dev libcairo2-dev pkg-config
 ```
 
 ### Install from Source
