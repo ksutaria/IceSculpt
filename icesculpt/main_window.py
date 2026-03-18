@@ -185,7 +185,21 @@ class MainWindow(Gtk.ApplicationWindow):
         menubar.append(file_item)
 
         # Edit menu
-...
+        edit_item = Gtk.MenuItem.new_with_mnemonic("_Edit")
+        edit_menu = Gtk.Menu()
+
+        undo_item = Gtk.MenuItem.new_with_mnemonic("_Undo")
+        undo_item.add_accelerator("activate", accel, Gdk.KEY_z,
+                                  Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
+        undo_item.connect("activate", self._on_undo)
+        edit_menu.append(undo_item)
+
+        redo_item = Gtk.MenuItem.new_with_mnemonic("_Redo")
+        redo_item.add_accelerator("activate", accel, Gdk.KEY_y,
+                                  Gdk.ModifierType.CONTROL_MASK, Gtk.AccelFlags.VISIBLE)
+        redo_item.connect("activate", self._on_redo)
+        edit_menu.append(redo_item)
+
         edit_item.set_submenu(edit_menu)
         menubar.append(edit_item)
 
@@ -217,92 +231,6 @@ class MainWindow(Gtk.ApplicationWindow):
         menubar.append(tools_item)
 
         # View menu
-...
-    def _on_split_equal(self, widget):
-...
-    # -- Tools operations --
-
-    def _on_check_health(self, widget):
-        from .linter import lint_theme
-        messages = lint_theme(self.model)
-        
-        dialog = Gtk.Dialog(title="Theme Health Check", parent=self, flags=0)
-        dialog.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
-        dialog.set_default_size(500, 400)
-        
-        vbox = dialog.get_content_area()
-        vbox.set_spacing(10)
-        vbox.set_margin_start(10)
-        vbox.set_margin_end(10)
-        vbox.set_margin_top(10)
-        
-        if not messages:
-            lbl = Gtk.Label(label="No issues found! Your theme looks healthy.")
-            vbox.pack_start(lbl, True, True, 0)
-        else:
-            sw = Gtk.ScrolledWindow()
-            sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
-            vbox.pack_start(sw, True, True, 0)
-            
-            listbox = Gtk.ListBox()
-            listbox.set_selection_mode(Gtk.SelectionMode.NONE)
-            sw.add(listbox)
-            
-            for msg in messages:
-                row = Gtk.ListBoxRow()
-                hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-                row.add(hbox)
-                
-                icon_name = "dialog-warning-symbolic"
-                if msg.severity == "error":
-                    icon_name = "dialog-error-symbolic"
-                elif msg.severity == "info":
-                    icon_name = "dialog-information-symbolic"
-                
-                img = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
-                hbox.pack_start(img, False, False, 0)
-                
-                lbl = Gtk.Label(label=f"<b>{msg.key}</b>: {msg.message}", xalign=0)
-                lbl.set_use_markup(True)
-                lbl.set_line_wrap(True)
-                hbox.pack_start(lbl, True, True, 0)
-                
-                listbox.add(row)
-        
-        dialog.show_all()
-        dialog.run()
-        dialog.destroy()
-
-    def _on_apply_large_fonts(self, widget):
-        self._snapshot_for_undo()
-        updates = {}
-        # Simple heuristic: find all font keys and increase size
-        for key in self.model.values:
-            if "Font" in key:
-                val = self.model.get(key)
-                # IceWM font format is usually "name/size"
-                if "/" in val:
-                    parts = val.split('/')
-                    try:
-                        size = int(parts[-1])
-                        parts[-1] = str(int(size * 1.5))
-                        updates[key] = "/".join(parts)
-                    except ValueError:
-                        pass
-        if updates:
-            self.model.batch_update(updates)
-            self._status("Applied large font transformation")
-
-    def _on_apply_high_contrast(self, widget):
-        self._snapshot_for_undo()
-        updates = {}
-        # Force title bars and text to black/white for maximum contrast
-        updates["ColorActiveTitleBar"] = "rgb:00/00/00"
-        updates["ColorActiveTitleBarText"] = "rgb:FF/FF/FF"
-        updates["ColorNormalTitleBar"] = "rgb:FF/FF/FF"
-        updates["ColorNormalTitleBarText"] = "rgb:00/00/00"
-        self.model.batch_update(updates)
-        self._status("Applied high contrast transformation")
         view_item = Gtk.MenuItem.new_with_mnemonic("_View")
         view_menu = Gtk.Menu()
 
@@ -414,6 +342,90 @@ class MainWindow(Gtk.ApplicationWindow):
         """Give more space to the preview (25/75 split)."""
         alloc = self.get_allocation()
         self._paned.set_position(int(alloc.width * 0.25))
+
+    # -- Tools operations --
+
+    def _on_check_health(self, widget):
+        from .linter import lint_theme
+        messages = lint_theme(self.model)
+        
+        dialog = Gtk.Dialog(title="Theme Health Check", parent=self, flags=0)
+        dialog.add_buttons(Gtk.STOCK_CLOSE, Gtk.ResponseType.CLOSE)
+        dialog.set_default_size(500, 400)
+        
+        vbox = dialog.get_content_area()
+        vbox.set_spacing(10)
+        vbox.set_margin_start(10)
+        vbox.set_margin_end(10)
+        vbox.set_margin_top(10)
+        
+        if not messages:
+            lbl = Gtk.Label(label="No issues found! Your theme looks healthy.")
+            vbox.pack_start(lbl, True, True, 0)
+        else:
+            sw = Gtk.ScrolledWindow()
+            sw.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+            vbox.pack_start(sw, True, True, 0)
+            
+            listbox = Gtk.ListBox()
+            listbox.set_selection_mode(Gtk.SelectionMode.NONE)
+            sw.add(listbox)
+            
+            for msg in messages:
+                row = Gtk.ListBoxRow()
+                hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
+                row.add(hbox)
+                
+                icon_name = "dialog-warning-symbolic"
+                if msg.severity == "error":
+                    icon_name = "dialog-error-symbolic"
+                elif msg.severity == "info":
+                    icon_name = "dialog-information-symbolic"
+                
+                img = Gtk.Image.new_from_icon_name(icon_name, Gtk.IconSize.BUTTON)
+                hbox.pack_start(img, False, False, 0)
+                
+                lbl = Gtk.Label(label=f"<b>{msg.key}</b>: {msg.message}", xalign=0)
+                lbl.set_use_markup(True)
+                lbl.set_line_wrap(True)
+                hbox.pack_start(lbl, True, True, 0)
+                
+                listbox.add(row)
+        
+        dialog.show_all()
+        dialog.run()
+        dialog.destroy()
+
+    def _on_apply_large_fonts(self, widget):
+        self._snapshot_for_undo()
+        updates = {}
+        # Simple heuristic: find all font keys and increase size
+        for key in self.model.values:
+            if "Font" in key:
+                val = self.model.get(key)
+                # IceWM font format is usually "name/size"
+                if "/" in val:
+                    parts = val.split('/')
+                    try:
+                        size = int(parts[-1])
+                        parts[-1] = str(int(size * 1.5))
+                        updates[key] = "/".join(parts)
+                    except ValueError:
+                        pass
+        if updates:
+            self.model.batch_update(updates)
+            self._status("Applied large font transformation")
+
+    def _on_apply_high_contrast(self, widget):
+        self._snapshot_for_undo()
+        updates = {}
+        # Force title bars and text to black/white for maximum contrast
+        updates["ColorActiveTitleBar"] = "rgb:00/00/00"
+        updates["ColorActiveTitleBarText"] = "rgb:FF/FF/FF"
+        updates["ColorNormalTitleBar"] = "rgb:FF/FF/FF"
+        updates["ColorNormalTitleBarText"] = "rgb:00/00/00"
+        self.model.batch_update(updates)
+        self._status("Applied high contrast transformation")
 
     # -- File operations --
 
