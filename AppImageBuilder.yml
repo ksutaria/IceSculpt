@@ -48,3 +48,5 @@ script:
   - mkdir -p $DESTDIR/usr/bin
   - cp icesculpt/icestudio-launcher $DESTDIR/usr/bin/icesculpt
   - chmod +x $DESTDIR/usr/bin/icesculpt
+  - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
+  - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
