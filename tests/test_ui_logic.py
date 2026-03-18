@@ -1,6 +1,9 @@
 """Headless UI logic tests."""
 
 import unittest
+import os
+import tempfile
+import shutil
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, Gdk, GLib
@@ -9,6 +12,9 @@ from icesculpt.theme_model import ThemeModel
 from icesculpt.preview_renderer import PreviewRenderer
 from icesculpt.widgets.preview_area import PreviewArea
 from icesculpt.editors.color_editor import ColorEditor
+from icesculpt.editors.pixmap_editor import PixmapEditor
+from icesculpt.app import IceSculptApp
+from icesculpt.main_window import MainWindow
 
 class TestUILogic(unittest.TestCase):
     @classmethod
@@ -56,6 +62,37 @@ class TestUILogic(unittest.TestCase):
         swatch, label = editor._swatches[key]
         editor._on_swatch_changed(swatch, "#FF0000", key)
         self.assertEqual(self.model.get_color_hex(key), "#FF0000")
+
+    def test_pixmap_editor_ops(self):
+        test_dir = tempfile.mkdtemp()
+        self.model.theme_dir = test_dir
+        editor = PixmapEditor(self.model)
+        
+        # Test generate buttons (exercises pixmap_generator + editor logic)
+        editor._on_generate_buttons(None)
+        self.assertTrue(os.path.exists(os.path.join(test_dir, "closeA.xpm")))
+        
+        # Test refresh
+        editor._on_refresh(None)
+        self.assertGreater(len(editor._store), 0)
+        
+        shutil.rmtree(test_dir)
+
+    def test_main_window_ops(self):
+        app = IceSculptApp()
+        win = MainWindow(app)
+        
+        # Test toggle preview
+        active = win._toggle_preview_item.get_active()
+        win._on_toggle_preview(win._toggle_preview_item)
+        
+        # Test status
+        win._status("Testing coverage")
+        
+        # Test title update
+        self.model.set("ThemeDescription", "CoverageTheme")
+        win._on_model_changed("ThemeDescription")
+        self.assertIn("CoverageTheme", win.get_title())
 
 if __name__ == "__main__":
     unittest.main()
