@@ -107,8 +107,8 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y libfuse2
           wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-          wget https://github.com/linuxdeploy/linuxdeploy-plugin-python/releases/download/continuous/linuxdeploy-plugin-python-x86_64.AppImage
-          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-python-x86_64.AppImage
+          wget https://github.com/linuxdeploy/linuxdeploy-plugin-conda/releases/download/continuous/linuxdeploy-plugin-conda-x86_64.sh
+          chmod +x linuxdeploy-x86_64.AppImage linuxdeploy-plugin-conda-x86_64.sh
           
           # Setup AppDir
           mkdir -p AppDir/usr/bin
@@ -129,8 +129,7 @@ jobs:
           EOF
           
           export VERSION=0.1.0
-          export PIP_REQUIREMENTS="."
-          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin python --output appimage
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin conda --output appimage
           
           mv IceSculpt-*.AppImage icesculpt-0.1.0-x86_64.appimage
       - name: Upload AppImage
