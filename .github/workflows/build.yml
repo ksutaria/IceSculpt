@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: IceSculpt-${{ matrix.arch }}.AppImage
-          path: ./IceSculpt-*.AppImage
+          path: IceSculpt-*.AppImage
 
   # 3. Build Flatpak (Sandboxed)
   build-flatpak:
