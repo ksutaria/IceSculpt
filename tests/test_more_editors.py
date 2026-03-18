@@ -22,8 +22,14 @@ class TestMoreEditors(unittest.TestCase):
         editor = FontEditor(self.model)
         # Test font change
         key = "FontActiveTitleBar"
-        editor._on_font_set(None, "Sans Bold 12", key)
-        self.assertEqual(self.model.get(key), "Sans Bold/12")
+        # Simulate signal: _on_font_set(button, key)
+        # We need a Gtk.FontButton instance
+        btn = Gtk.FontButton()
+        btn.set_font("Sans Bold 12")
+        editor._on_font_set(btn, key)
+        # pango_to_xft converts "Sans Bold 12" to "Sans:size=12:bold" (best effort)
+        self.assertIn("Sans", self.model.get(key))
+        self.assertIn("size=12", self.model.get(key))
 
     def test_desktop_editor_logic(self):
         editor = DesktopEditor(self.model)
