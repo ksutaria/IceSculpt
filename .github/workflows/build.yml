@@ -8,8 +8,23 @@ on:
     branches: [ main ]
 
 jobs:
-  # 0. Run Tests and Coverage
+  # 0. Static Analysis (Linter)
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install Ruff
+        run: pip install ruff
+      - name: Run Ruff
+        run: ruff check .
+
+  # 1. Run Tests and Coverage
   test:
+    needs: lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

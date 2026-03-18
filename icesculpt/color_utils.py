@@ -323,8 +323,8 @@ def get_hls(hex_color):
     return colorsys.rgb_to_hls(r, g, b)
 
 
-def hls_to_hex(h, l, s):
+def hls_to_hex(h, lum, s):
     """Convert HLS to hex."""
     import colorsys
-    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    r, g, b = colorsys.hls_to_rgb(h, lum, s)
     return rgba_to_hex(r, g, b)

@@ -47,5 +47,15 @@ class TestWidgetsLogic(unittest.TestCase):
         swatch.hex_color = "#00FF00"
         self.assertEqual(swatch.hex_color, "#00FF00")
 
+    def test_color_swatch_gradient_draw(self):
+        # This exercises the cairo drawing logic for gradients
+        swatch = ColorSwatch("rgb:FF/00/00,rgb:00/00/FF")
+        import cairo
+        surface = cairo.ImageSurface(cairo.FORMAT_ARGB32, 24, 24)
+        cr = cairo.Context(surface)
+        # Manually trigger the draw handler
+        swatch._on_draw(swatch, cr)
+        # If no AttributeError was raised, the fix is verified
+
 if __name__ == "__main__":
     unittest.main()

@@ -4,6 +4,7 @@ import gi
 gi.require_version("Gtk", "3.0")
 gi.require_version("Gdk", "3.0")
 from gi.repository import Gtk, Gdk, GObject
+import cairo
 
 from ..color_utils import hex_to_rgba
 
@@ -65,7 +66,7 @@ class ColorSwatch(Gtk.DrawingArea):
         # Draw the color or gradient
         if ',' in self._hex:
             # Gradient
-            pat = cr.create_linear_pattern(0, 0, w, h)
+            pat = cairo.LinearGradient(0, 0, w, h)
             colors = self._hex.split(',')
             for i, c in enumerate(colors):
                 r, g, b, _ = hex_to_rgba(c.strip())

@@ -1,0 +1,13 @@
+[tool.ruff]
+line-length = 100
+target-version = "py38"
+
+[tool.ruff.lint]
+# Enable Pyflakes (F) and Error (E) codes
+select = ["F", "E", "W"]
+ignore = [
+    "E402", # Module level import not at top of file (Required for gi.require_version)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]

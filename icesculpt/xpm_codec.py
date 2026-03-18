@@ -123,15 +123,15 @@ class XpmImage:
             
             # Convert to HLS
             r, g, b, _ = hex_to_rgba(color_str)
-            h, l, s = colorsys.rgb_to_hls(r, g, b)
+            h, lum, s = colorsys.rgb_to_hls(r, g, b)
             
             # Apply shifts
             h = (h + hue_shift) % 1.0
             s = max(0.0, min(1.0, s * saturation_factor))
-            l = max(0.0, min(1.0, l * luminance_factor))
+            lum = max(0.0, min(1.0, lum * luminance_factor))
             
             # Back to hex
-            nr, ng, nb = colorsys.hls_to_rgb(h, l, s)
+            nr, ng, nb = colorsys.hls_to_rgb(h, lum, s)
             new_colors[char] = rgba_to_hex(nr, ng, nb)
         
         self.colors = new_colors
