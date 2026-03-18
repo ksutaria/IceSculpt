@@ -95,27 +95,29 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        arch: [x86_64, aarch64]
+        arch: [x86_64]
     steps:
       - uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Build AppImage
-        uses: docker://appimagecrafters/appimage-builder:latest
-        with:
-          entrypoint: /bin/bash
-          args: -c "appimage-builder --recipe AppImageBuilder.yml --skip-test"
-      - name: Rename and Verify AppImage
+      - name: Install dependencies
         run: |
-          for f in *.AppImage; do
-            mv "$f" "${f%.AppImage}.appimage"
-          done
-          ls -l *.appimage
+          sudo apt-get update
+          sudo apt-get install -y python3-gi python3-gi-cairo gir1.2-gtk-3.0
+      - name: Build AppImage
+        uses: Draft-Noob/linuxdeploy-action@main
+        with:
+          app-name: IceSculpt
+          executable-path: icesculpt/icesculpt-launcher
+          icon-path: icesculpt/data/icons/icesculpt.svg
+          python-build: 'true'
+          pip-requirements: '.'
+      - name: Rename and Upload AppImage
+        run: |
+          mv IceSculpt-*.AppImage icesculpt-0.1.0-x86_64.appimage
       - name: Upload AppImage
         uses: actions/upload-artifact@v4
         with:
-          name: IceSculpt-${{ matrix.arch }}.appimage
-          path: ./*.appimage
+          name: IceSculpt-x86_64.appimage
+          path: icesculpt-0.1.0-x86_64.appimage
 
   # 3. Build Flatpak (Sandboxed)
   build-flatpak:
@@ -157,7 +159,6 @@ jobs:
           files: |
             release-artifacts/python-package/*
             release-artifacts/IceSculpt-x86_64.appimage/*
-            release-artifacts/IceSculpt-aarch64.appimage/*
             release-artifacts/IceSculpt.flatpak/*
           generate_release_notes: true
           draft: false
