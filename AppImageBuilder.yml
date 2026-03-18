@@ -28,6 +28,12 @@ AppDir:
       - libcairo2
       - libdbus-1-3
       - libcanberra-gtk3-module
+      - libglib2.0-0
+      - libgdk-pixbuf2.0-0
+      - shared-mime-info
+      - desktop-file-utils
+      - adwaita-icon-theme
+      - hicolor-icon-theme
   runtime:
     env:
       PYTHONHOME: '${APPDIR}/usr'
@@ -42,7 +48,7 @@ script:
   - export DESTDIR=$TARGET_APPDIR
   - apt-get update || true
   - apt-get install -y gnupg
-  - gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || true
+  - gpg --keyserver hkps://keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || true
   - gpg --export 871920D1991BC93C | apt-key add - || true
   - gpg --export 3B4FE6ACC0B21F32 | apt-key add - || true
   - mkdir -p $DESTDIR/usr/lib/python3.10/site-packages
@@ -52,3 +58,6 @@ script:
   - chmod +x $DESTDIR/usr/bin/icesculpt
   - mkdir -p $DESTDIR/usr/share/icons/hicolor/scalable/apps
   - cp icesculpt/data/icons/icesculpt.svg $DESTDIR/usr/share/icons/hicolor/scalable/apps/icesculpt.svg
+  - mkdir -p $DESTDIR/usr/share/applications
+  - echo -e "[Desktop Entry]\nType=Application\nName=IceSculpt\nExec=icesculpt\nIcon=icesculpt\nCategories=Utility;Settings;" > $DESTDIR/usr/share/applications/org.icesculpt.IceSculpt.desktop
+  - update-mime-database $DESTDIR/usr/share/mime || true
