@@ -24,7 +24,7 @@ modules:
     sources:
       - type: archive
         url: https://download.gnome.org/sources/pygobject/3.48/pygobject-3.48.2.tar.xz
-        sha256: 7eaae30453f4995299fca46c867618ade399c154709f0d3ebbb0da80236c2ac6
+        sha256: 0794aeb4a9be31a092ac20621b5f54ec280f9185943d328b105cdae6298ad1a7
 
   - name: icesculpt
     buildsystem: python

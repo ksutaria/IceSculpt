@@ -35,6 +35,9 @@ AppImage:
 script:
   - export DESTDIR=$TARGET_APPDIR
   # Import missing GPG keys to avoid apt-get update failure
+  # Use a more reliable way to add keys
+  - apt-get update || true
+  - apt-get install -y gnupg
   - gpg --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C 3B4FE6ACC0B21F32 || true
   - gpg --export 871920D1991BC93C | apt-key add - || true
   - gpg --export 3B4FE6ACC0B21F32 | apt-key add - || true
