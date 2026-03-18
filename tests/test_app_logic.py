@@ -52,7 +52,7 @@ class TestAppBoost(unittest.TestCase):
         app = IceSculptApp()
         with patch('gi.repository.Gtk.Application.do_startup'), \
              patch('gi.repository.Gdk.Screen.get_default') as mock_screen:
-            mock_screen.return_value = None 
+            mock_screen.return_value = None
             app.do_startup()
 
         test_dir = tempfile.mkdtemp()

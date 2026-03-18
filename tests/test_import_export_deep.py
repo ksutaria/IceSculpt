@@ -1,8 +1,6 @@
 """Deep tests for import/export logic and safe tar members."""
 
 import unittest
-import os
-import tarfile
 import tempfile
 import shutil
 from unittest.mock import MagicMock, patch
@@ -13,7 +11,7 @@ from gi.repository import Gtk
 
 from icesculpt.theme_model import ThemeModel
 from icesculpt.dialogs.import_export import (
-    _safe_tar_members, _do_import, _do_export, 
+    _safe_tar_members, _do_import, _do_export,
     import_theme_dialog, export_theme_dialog
 )
 

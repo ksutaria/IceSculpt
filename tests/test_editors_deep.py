@@ -90,12 +90,13 @@ class TestEditorsDeep(unittest.TestCase):
         # Create dummy icon structure
         icons_dir = os.path.join(self.test_dir, "icons", "16x16")
         os.makedirs(icons_dir)
-        with open(os.path.join(icons_dir, "test.png"), "w") as f: f.write("fake")
+        with open(os.path.join(icons_dir, "test.png"), "w") as f:
+            f.write("fake")
         
         # Mock GdkPixbuf to avoid real file reading
         with patch('gi.repository.GdkPixbuf.Pixbuf.new_from_file_at_scale'):
             editor = IconEditor(self.model)
-            # Should have added one item to flowbox (even if pixbuf mock returns None, 
+            # Should have added one item to flowbox (even if pixbuf mock returns None,
             # it might fail or we can mock it better)
             pass
 
