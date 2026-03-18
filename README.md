@@ -80,9 +80,30 @@ Contributions are welcome! Please feel free to submit a Pull Request.
    ```
 
 ### Architecture Overview
-* **`icesculpt/theme_model.py`:** The central data store. UI components update the model, which fires events to the renderer.
-* **`icesculpt/preview_renderer.py`:** A Cairo-based engine that draws a simulated IceWM environment based on the current model state.
-* **`icesculpt/theme_parser.py`:** Reads and writes IceWM configuration files while preserving non-data text (comments, spacing).
+
+IceSculpt is built on a reactive, model-view-controller (MVC) inspired architecture designed for real-time feedback and modularity.
+
+```
+┌───────────────────┐      ┌────────────────────┐      ┌─────────────────────┐
+│      Editors      │      │                    │      │       Preview       │
+│ (Color, Font, etc)│────┐ │     ThemeModel     │ ┌────│ (Taskbar, Window,   │
+└───────────────────┘    │ │ (Source of Truth)  │ │    │  Menu Rendering)    │
+                         ├─►                    ◄─┤    └─────────────────────┘
+┌───────────────────┐    │ │ 1. Fires Callbacks │ │      ▲
+│  User Interface   │────┘ └────────────────────┘ │      │
+│  (GTK Widgets)    │                            │      │ 2. Redraws on change
+└───────────────────┘                            └──────┘
+```
+
+*   **`ThemeModel` (The "Model")**: This is the heart of the application. It acts as the single source of truth, holding all theme properties in memory. It knows nothing about the UI.
+
+*   **Editor Panels (The "Controllers")**: Each tab in the UI (e.g., `ColorEditor`, `FontEditor`) is a "controller." When you interact with a GTK widget (like a color swatch or a font button), the editor's sole job is to update the corresponding value in the `ThemeModel`.
+
+*   **`PreviewRenderer` (The "View")**: This is a powerful, Cairo-based rendering engine that listens for change notifications from the `ThemeModel`. When any property is altered, the `PreviewRenderer` is automatically triggered to redraw the relevant parts of the preview (the fake taskbar, window, etc.), providing instant visual feedback.
+
+*   **`ThemeParser`**: A specialized, lossless parser that reads and writes IceWM's `.theme` files. It's designed to preserve comments, whitespace, and unknown keys, ensuring that your custom formatting is never lost when you save a theme.
+
+This separation of concerns makes the application robust and easy to extend. A new editor can be added without modifying the core rendering logic, and the model can be manipulated independently of any UI.
 
 ## License
 
